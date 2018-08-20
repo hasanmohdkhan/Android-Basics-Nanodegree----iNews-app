@@ -1,6 +1,7 @@
 package com.example.hasanzian.newsapp.Utils;
 
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -28,6 +29,10 @@ public final class QueryUtils {
      * @param jsonString to parse
      */
     public static ArrayList<Model> extractNews(String jsonString) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(jsonString)) {
+            return null;
+        }
 
         // Create an empty ArrayList that we can start adding iNews to
         ArrayList<Model> iNews = new ArrayList<>();
@@ -63,13 +68,7 @@ public final class QueryUtils {
 
                 Model Model = new Model(webTitle,webUrl,thumbnail ,sectionName,date,authorName,authorImage);
                 iNews.add(Model);
-                Log.d("List",iNews.toString());
-
-
             }
-
-
-
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,

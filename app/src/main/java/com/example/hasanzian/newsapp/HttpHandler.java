@@ -1,5 +1,7 @@
 package com.example.hasanzian.newsapp;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,8 +32,18 @@ class HttpHandler {
             urlConnection.setReadTimeout(10000 /* read time*/);
             urlConnection.setConnectTimeout(15000 /*connection time out*/);
             urlConnection.connect();
-            inputStream = urlConnection.getInputStream();
-            jsonResponse = convertInputStreamToJsonString(inputStream);
+            // If the request was successful (response code 200),
+            // then read the input stream and parse the response.
+            if (urlConnection.getResponseCode() == 200) {
+                inputStream = urlConnection.getInputStream();
+                jsonResponse = convertInputStreamToJsonString(inputStream);
+                Log.e("responseCode ", "response code: " + urlConnection.getResponseCode());
+            } else {
+                Log.e("responseCode ", "Error response code: " + urlConnection.getResponseCode());
+            }
+
+
+
         } catch (IOException e) {
             //handle exception
         } finally {

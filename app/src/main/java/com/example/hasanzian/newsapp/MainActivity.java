@@ -1,6 +1,7 @@
 package com.example.hasanzian.newsapp;
 
-import android.os.AsyncTask;
+import android.app.LoaderManager;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,20 +11,21 @@ import android.util.Log;
 
 import com.example.hasanzian.newsapp.Adaptor.RecyclerAdaptor;
 import com.example.hasanzian.newsapp.Utils.Model;
-import com.example.hasanzian.newsapp.Utils.QueryUtils;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    RecyclerView mRecyclerView;
-    RecyclerAdaptor adaptor;
-    List<Model> mList = new ArrayList<>();
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Model>> {
     private static final String URL_API = "https://content.guardianapis.com/search?q=&format=json&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=newest&api-key=441da542-bd64-4060-b81c-eff647cb6f27";
-
+    private static final String LOG_TAG = MainActivity.class.getName();
+    /**
+     * Constant value for the earthquake loader ID. We can choose any integer.
+     * This really only comes into play if you're using multiple loaders.
+     */
+    private static final int NEWS_LOADER_ID = 1;
+    RecyclerView mRecyclerView;
+    List<Model> mList = new ArrayList<>();
+    private RecyclerAdaptor mAdaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,52 +36,31 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        MyTask myTask = new MyTask();
-        myTask.execute();
-
-
-    }
-
-    public class MyTask extends AsyncTask<Void,Void,Void>{
-        @Override
-        protected Void doInBackground(Void... voids) {
-            HttpHandler httpHandler = new HttpHandler();
-            String jsonString ="";
-            try {
-                //getting Json String
-                jsonString = httpHandler.makeHttpRequest(createUrl(URL_API));
-                mList = QueryUtils.extractNews(jsonString);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            adaptor = new RecyclerAdaptor(mList);
-            mRecyclerView.setAdapter(adaptor);
-        }
-
-         /* Returns new URL object from the given string URL.
-           */
-        private  URL createUrl(String stringUrl) {
-            URL url = null;
-            try {
-                url = new URL(stringUrl);
-            } catch (MalformedURLException e) {
-                Log.e("LOG_TAG", "Problem building the URL ", e);
-            }
-            return url;
-        }
-
-
-
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(NEWS_LOADER_ID, null, this);
+        Log.d(LOG_TAG, "initLoader");
 
     }
 
+    @Override
+    public Loader<List<Model>> onCreateLoader(int i, Bundle bundle) {
+        Log.d(LOG_TAG, "onCreateLoader");
+        // Create a new loader for the given URL
+        return new NewsLoader(this, URL_API);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Model>> loader, List<Model> list) {
+        Log.d(LOG_TAG, "list" + list.size());
+        mAdaptor = new RecyclerAdaptor(list);
+        mRecyclerView.setAdapter(mAdaptor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Model>> loader) {
+        // Loader reset, so we can clear out our existing data.
+        //  mAdapter.clear();
+        Log.d(LOG_TAG, "onLoaderReset");
+    }
 
 }

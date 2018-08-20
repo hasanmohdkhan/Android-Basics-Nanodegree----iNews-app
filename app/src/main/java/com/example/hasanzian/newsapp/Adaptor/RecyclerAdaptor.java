@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.Utils.Model;
 
@@ -32,29 +33,6 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         this.mList = mList;
     }
 
-
-    /**
-     * myViewHolder class initializing view
-     */
-    class myViewHolder extends RecyclerView.ViewHolder {
-        TextView mHeading, mSubHeading , mAuthorName,mSection,mDate;//,mAuthorName;
-        ImageView mImageView,mAuthorImage;
-
-
-        myViewHolder(View itemView) {
-            super(itemView);
-            mHeading = itemView.findViewById(R.id.heading);
-            mSubHeading = itemView.findViewById(R.id.sub_heading_text); //author image
-            mImageView = itemView.findViewById(R.id.image);
-            mAuthorName = itemView.findViewById(R.id.author);
-            mSection = itemView.findViewById(R.id.section);
-            mDate = itemView.findViewById(R.id.date);
-            mAuthorImage = itemView.findViewById(R.id.authorImage);
-
-        }
-    }
-
-
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -71,9 +49,13 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         holder.mSection.setText(mList.get(position).getSection());
         holder.mAuthorName.setText(mList.get(position).getAuthor());
         // holder.mImageView.setImageResource(R.color.colorAccent);
-        Glide.with(mContext)
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.color.colorAccent);
+        requestOptions.error(R.color.colorPrimaryDark);
+
+        Glide.with(mContext).setDefaultRequestOptions(requestOptions)
                 .load(mList.get(position).getImageUrl()).into(holder.mImageView);
-        Glide.with(mContext)
+        Glide.with(mContext).setDefaultRequestOptions(requestOptions)
                 .load(mList.get(position).getAuthorImage()).into(holder.mAuthorImage);
 
 
@@ -82,6 +64,27 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    /**
+     * myViewHolder class initializing view
+     */
+    class myViewHolder extends RecyclerView.ViewHolder {
+        TextView mHeading, mSubHeading, mAuthorName, mSection, mDate;//,mAuthorName;
+        ImageView mImageView, mAuthorImage;
+
+
+        myViewHolder(View itemView) {
+            super(itemView);
+            mHeading = itemView.findViewById(R.id.heading);
+            mSubHeading = itemView.findViewById(R.id.sub_heading_text); //author image
+            mImageView = itemView.findViewById(R.id.image);
+            mAuthorName = itemView.findViewById(R.id.author);
+            mSection = itemView.findViewById(R.id.section);
+            mDate = itemView.findViewById(R.id.date);
+            mAuthorImage = itemView.findViewById(R.id.authorImage);
+
+        }
     }
 
 
