@@ -6,16 +6,16 @@ package com.example.hasanzian.newsapp.Utils;
 
 public class Model {
     private String mHeading;
-    private String mSubheading;
+    private String mArticleUrl;
     private String mImageUrl;
     private String mDate;
     private String mSection;
     private String mAuthor;
     private String mAuthorImage;
 
-    public Model(String mHeading, String mSubheading, String mImageUrl, String mDate, String mSection, String mAuthor, String mAuthorImage) {
+    public Model(String mHeading, String mArticleUrl, String mImageUrl, String mDate, String mSection, String mAuthor, String mAuthorImage) {
         this.mHeading = mHeading;
-        this.mSubheading = mSubheading;
+        this.mArticleUrl = mArticleUrl;
         this.mImageUrl = mImageUrl;
         this.mDate = mDate;
         this.mSection = mSection;
@@ -27,8 +27,8 @@ public class Model {
         return mHeading;
     }
 
-    public String getSubheading() {
-        return mSubheading;
+    public String getArticleUrl() {
+        return mArticleUrl;
     }
 
     public String getImageUrl() {

@@ -1,5 +1,6 @@
 package com.example.hasanzian.newsapp.Adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.Utils.Model;
+import com.example.hasanzian.newsapp.Utils.QueryUtils;
 
 import java.util.List;
 
@@ -41,24 +43,22 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         return new myViewHolder(view);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         holder.mHeading.setText(mList.get(position).getHeading());
-        holder.mSubHeading.setText(mList.get(position).getSubheading());
-        holder.mDate.setText(mList.get(position).getDate());
+        // Format string to format
+        String formattedString = QueryUtils.formatDate(mList.get(position).getDate());
+        holder.mDate.setText(formattedString);
         holder.mSection.setText(mList.get(position).getSection());
-        holder.mAuthorName.setText(mList.get(position).getAuthor());
+        holder.mAuthorName.setText("by " + mList.get(position).getAuthor());
         // holder.mImageView.setImageResource(R.color.colorAccent);
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.color.colorAccent);
-        requestOptions.error(R.color.colorPrimaryDark);
+        requestOptions.error(R.drawable.ic_action_user);
 
-        Glide.with(mContext).setDefaultRequestOptions(requestOptions)
-                .load(mList.get(position).getImageUrl()).into(holder.mImageView);
-        Glide.with(mContext).setDefaultRequestOptions(requestOptions)
-                .load(mList.get(position).getAuthorImage()).into(holder.mAuthorImage);
-
-
+        Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(mList.get(position).getImageUrl()).into(holder.mImageView);
+        Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(mList.get(position).getAuthorImage()).into(holder.mAuthorImage);
     }
 
     @Override
@@ -70,14 +70,12 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
      * myViewHolder class initializing view
      */
     class myViewHolder extends RecyclerView.ViewHolder {
-        TextView mHeading, mSubHeading, mAuthorName, mSection, mDate;//,mAuthorName;
+        TextView mHeading, mAuthorName, mSection, mDate;
         ImageView mImageView, mAuthorImage;
-
 
         myViewHolder(View itemView) {
             super(itemView);
             mHeading = itemView.findViewById(R.id.heading);
-            mSubHeading = itemView.findViewById(R.id.sub_heading_text); //author image
             mImageView = itemView.findViewById(R.id.image);
             mAuthorName = itemView.findViewById(R.id.author);
             mSection = itemView.findViewById(R.id.section);

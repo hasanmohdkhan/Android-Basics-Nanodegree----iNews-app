@@ -1,4 +1,4 @@
-package com.example.hasanzian.newsapp;
+package com.example.hasanzian.newsapp.NetworkUtils;
 
 import android.util.Log;
 
@@ -14,12 +14,13 @@ import java.nio.charset.Charset;
  * Http request handler class
  */
 
-class HttpHandler {
+public class HttpHandler {
 
-    HttpHandler() {
+
+    public HttpHandler() {
     }
 
-    String makeHttpRequest(URL url) throws IOException {
+    public String makeHttpRequest(URL url) throws IOException {
         //returning a json String from this method
         String jsonResponse = "";
         //url connection

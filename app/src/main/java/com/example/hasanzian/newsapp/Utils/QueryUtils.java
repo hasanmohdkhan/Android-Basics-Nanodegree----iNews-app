@@ -8,7 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -66,8 +70,8 @@ public final class QueryUtils {
                             authorImage = tagObject.getString("bylineImageUrl");}
                    }
 
-                Model Model = new Model(webTitle,webUrl,thumbnail ,sectionName,date,authorName,authorImage);
-                iNews.add(Model);
+                Model model = new Model(webTitle, webUrl, thumbnail, date, sectionName, authorName, authorImage);
+                iNews.add(model);
             }
 
         } catch (JSONException e) {
@@ -80,5 +84,28 @@ public final class QueryUtils {
         // Return the list of iNews
         return iNews;
     }
+
+    /**
+     * formats the date in the required format
+     *
+     * @param publishDate date to be formatted
+     * @return formatted date in the form of a string
+     */
+    public static String formatDate(String publishDate) {
+        String formattedDate = "";
+        //define input date format
+        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        //define output date format
+        SimpleDateFormat output = new SimpleDateFormat("dd MMM yyyy, HH:mm aa", Locale.getDefault());
+        try {
+            //parse and format the input date
+            Date date = input.parse(publishDate);
+            formattedDate = output.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return formattedDate;
+    }
+
 
 }
