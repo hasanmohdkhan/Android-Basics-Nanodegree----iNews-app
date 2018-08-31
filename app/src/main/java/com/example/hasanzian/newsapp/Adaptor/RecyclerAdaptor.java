@@ -1,7 +1,7 @@
 package com.example.hasanzian.newsapp.Adaptor;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,9 +43,19 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         return new myViewHolder(view);
     }
 
-    @SuppressLint("CheckResult")
+
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
+        // setting custom font -- Product Sans
+        Typeface headingFont, regularFont;
+        regularFont = QueryUtils.regularFont(mContext);
+        headingFont = QueryUtils.headingFont(mContext);
+
+        holder.mDate.setTypeface(regularFont);
+        holder.mHeading.setTypeface(headingFont);
+        holder.mSection.setTypeface(regularFont);
+        holder.mAuthorName.setTypeface(regularFont);
+
         holder.mHeading.setText(mList.get(position).getHeading());
         // Format string to format
         String formattedString = QueryUtils.formatDate(mList.get(position).getDate());
@@ -55,7 +65,7 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         // holder.mImageView.setImageResource(R.color.colorAccent);
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.color.colorAccent);
-        requestOptions.error(R.drawable.ic_action_user);
+        requestOptions.error(R.drawable.gurdian);
 
         Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(mList.get(position).getImageUrl()).into(holder.mImageView);
         Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(mList.get(position).getAuthorImage()).into(holder.mAuthorImage);
@@ -84,6 +94,5 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
 
         }
     }
-
 
 }

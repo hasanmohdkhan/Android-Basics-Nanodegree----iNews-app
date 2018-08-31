@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">NewsApp</string>
-    <string name="thumnail">thumnail</string>
-    <string name="no_internet">NO Internet</string>
-    <string name="by_string">By </string>
+    <string name="app_name">iNews Feed</string>
+    <string name="thumnail">thumbnail</string>
+    <string name="no_internet">Oops! No Internet\n please check your network connection</string>
 </resources>

@@ -50,14 +50,13 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="@dimen/card_image_margin"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_toEndOf="@+id/card_image"
                 android:layout_toRightOf="@+id/card_image"
-                android:layout_marginTop="4dp"
                 android:maxLines="3"
+                android:textColor="@color/HeadingColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/HeadingColor"
-                app:fontFamily="@font/roboto"
                 tools:text="US Open 2018, day one: Nadal, Serena and Murray through, Halep out – as it happened" />
 
 
@@ -73,8 +72,7 @@
                 android:layout_marginStart="@dimen/card_image_margin"
                 android:textColor="@color/SectionColor"
                 android:textStyle="bold"
-                tools:text="Section"
-                app:fontFamily="@font/roboto" />
+                tools:text="Section" />
 
             <TextView
                 android:id="@+id/date"
@@ -104,7 +102,6 @@
                 android:layout_toRightOf="@+id/authorImage"
                 android:textColor="@color/AuthorNameColor"
                 android:textStyle="bold"
-                app:fontFamily="@font/roboto"
                 tools:text="By Author Name" />
 
             <de.hdodenhof.circleimageview.CircleImageView

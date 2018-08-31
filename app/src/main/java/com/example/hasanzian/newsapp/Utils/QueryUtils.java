@@ -1,6 +1,10 @@
 package com.example.hasanzian.newsapp.Utils;
 
-
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -14,12 +18,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.content.Context.CONNECTIVITY_SERVICE;
+
 /**
- * Helper methods related to requesting and receiving earthquake data from USGS.
+ * Helper methods related to requesting and receiving News data from Guardian
  */
 public final class QueryUtils {
 
-     /**
+    /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
      * This class is only meant to hold static variables and methods, which can be accessed
      * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
@@ -30,6 +36,7 @@ public final class QueryUtils {
     /**
      * Return a list of {@link Model} objects that has been built up from
      * parsing a JSON response.
+     *
      * @param jsonString to parse
      */
     public static ArrayList<Model> extractNews(String jsonString) {
@@ -38,7 +45,7 @@ public final class QueryUtils {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding iNews to
+        // Create an empty ArrayList that we can start adding iNews to list
         ArrayList<Model> iNews = new ArrayList<>();
 
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
@@ -52,23 +59,29 @@ public final class QueryUtils {
             // Extracting result object from response object
             JSONArray resultsArray = responseObject.getJSONArray("results");
             //for loop for extracting each objects
-            for(int i= 0 ; i < resultsArray.length() ;i++){
+            for (int i = 0; i < resultsArray.length(); i++) {
                 String authorName = "";
                 String authorImage = "";
                 JSONObject currentObject = resultsArray.getJSONObject(i);
                 String webTitle = currentObject.getString("webTitle");
                 String sectionName = currentObject.getString("sectionName");
                 String date = currentObject.getString("webPublicationDate");
-                String webUrl  = currentObject.getString("webUrl");
+                String webUrl = currentObject.getString("webUrl");
                 JSONObject fields = currentObject.getJSONObject("fields");
                 String thumbnail = fields.getString("thumbnail");
                 JSONArray tagsArray = currentObject.getJSONArray("tags");
-                   for(int j = 0 ;j < tagsArray.length() ; j++ ){
+                // check if tag array has any entry or not
+                if (tagsArray.length() == 0) {
+                    authorName = "Guardian";
+                } else {
+                    for (int j = 0; j < tagsArray.length(); j++) {
                         JSONObject tagObject = tagsArray.getJSONObject(j);
                         authorName = tagObject.getString("webTitle");
-                        if(tagObject.has("bylineImageUrl")){
-                            authorImage = tagObject.getString("bylineImageUrl");}
-                   }
+                        if (tagObject.has("bylineImageUrl")) {
+                            authorImage = tagObject.getString("bylineImageUrl");
+                        }
+                    }
+                }
 
                 Model model = new Model(webTitle, webUrl, thumbnail, date, sectionName, authorName, authorImage);
                 iNews.add(model);
@@ -96,7 +109,7 @@ public final class QueryUtils {
         //define input date format
         SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
         //define output date format
-        SimpleDateFormat output = new SimpleDateFormat("dd MMM yyyy, HH:mm aa", Locale.getDefault());
+        SimpleDateFormat output = new SimpleDateFormat("dd MMM yyyy, HH:mm ", Locale.getDefault());
         try {
             //parse and format the input date
             Date date = input.parse(publishDate);
@@ -108,4 +121,44 @@ public final class QueryUtils {
     }
 
 
+    /**
+     * check the status of network
+     *
+     * @param context reference to calling Activity
+     * @return active network information true/false
+     */
+    public static boolean isConnectedToNetwork(Context context) {
+        // get reference to ConnectivityManager
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            // get the current status of network
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    /**
+     * To get the custom font Product Sans Regular
+     *
+     * @param mContext context of app
+     * @return custom font location of Product Sans Regular
+     */
+    public static Typeface regularFont(Context mContext) {
+        AssetManager assetManager = mContext.getApplicationContext().getAssets();
+        Typeface regularFont = Typeface.createFromAsset(assetManager, "fonts/Product Sans Regular.ttf");
+        return regularFont;
+    }
+
+    /**
+     * To get the custom font PProduct Sans Bold
+     *
+     * @param mContext context of app
+     * @return custom font location of Product Sans Bold
+     */
+    public static Typeface headingFont(Context mContext) {
+        AssetManager assetManager = mContext.getApplicationContext().getAssets();
+        Typeface headingFont = Typeface.createFromAsset(assetManager, "fonts/Product Sans Bold.ttf");
+        return headingFont;
+    }
 }
