@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">iNews Feed</string>
+    <string name="app_name">iNews</string>
     <string name="thumnail">thumbnail</string>
     <string name="no_internet">Oops! No Internet\n please check your network connection</string>
 </resources>

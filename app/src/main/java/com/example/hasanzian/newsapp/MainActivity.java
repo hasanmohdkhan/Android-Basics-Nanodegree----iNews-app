@@ -22,6 +22,9 @@ import com.example.hasanzian.newsapp.Utils.QueryUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Model>> {
     /**
      * Constant value for the News loader ID. We can choose any integer.
@@ -33,24 +36,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     LinearLayoutManager mLinearLayoutManager;
     private static final String LOG_TAG = MainActivity.class.getName();
     LoaderManager loaderManager;
-    RecyclerView mRecyclerView;
-    private String API_KEY = "&api-key=441da542-bd64-4060-b81c-eff647cb6f27";
+    @BindView(R.id.empty_view)
+    TextView mEmptyStateTextView;
     private String START_URL = "https://content.guardianapis.com/search?q=&format=json&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=newest&page=";
     private String URL_API;
     private List<Model> mList = new ArrayList<>();
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 50;
-    TextView mEmptyStateTextView;
-    private ProgressBar footer;
+    @BindView(R.id.footer)
+    ProgressBar footer; // when scrolling is done
+    @BindView(R.id.loading_indicator)
+    View indicator; // shown when 1st time load app is loaded
+    @BindView(R.id.recycler_view)
+    RecyclerView mRecyclerView;
+    private String API_KEY = "&api-key=" + BuildConfig.ApiKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        footer = findViewById(R.id.footer);
+        ButterKnife.bind(this);
+
         footer.setVisibility(View.INVISIBLE);
-        mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -59,13 +67,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdaptor = new RecyclerAdaptor(mList);
         mRecyclerView.setAdapter(mAdaptor);
 
-        mEmptyStateTextView = findViewById(R.id.empty_view);
         mEmptyStateTextView.setTypeface(QueryUtils.headingFont(this));
         mEmptyStateTextView.setVisibility(View.VISIBLE);
 
-        boolean isConnected = QueryUtils.isConnectedToNetwork(this);
-
-        if (isConnected) {
+        if (QueryUtils.isConnectedToNetwork(this)) {
             mEmptyStateTextView.setVisibility(View.GONE);
             loaderManager = getLoaderManager();
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
@@ -89,8 +94,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mRecyclerView.addOnScrollListener(new PaginationScrollListener(mLinearLayoutManager) {
             @Override
             protected void loadMoreItems() {
-                ProgressBar indicator = findViewById(R.id.footer);
-                indicator.setVisibility(View.VISIBLE);
+                footer.setVisibility(View.VISIBLE);
                 boolean isConnected = QueryUtils.isConnectedToNetwork(getApplication());
                 if (isConnected) {
                     mEmptyStateTextView.setVisibility(View.INVISIBLE);
@@ -128,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void showNotConnected() {
-        View indicator = findViewById(R.id.loading_indicator);
         indicator.setVisibility(View.GONE);
         mEmptyStateTextView.setVisibility(View.VISIBLE);
         mEmptyStateTextView.setText(R.string.no_internet);
@@ -144,12 +147,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Model>> loader, List<Model> list) {
-        Log.d(LOG_TAG, "list" + list.size());
         mList.addAll(list);  // list
-        Log.d(LOG_TAG, "list" + mList.size());
+
         // Hide loading indicator because the data has been loaded
-        ProgressBar loadingIndicator = findViewById(R.id.loading_indicator);
-        loadingIndicator.setVisibility(View.GONE);
+        indicator.setVisibility(View.GONE);
         footer.setVisibility(View.GONE);
         mEmptyStateTextView.setVisibility(View.GONE);
         mAdaptor.notifyDataSetChanged();

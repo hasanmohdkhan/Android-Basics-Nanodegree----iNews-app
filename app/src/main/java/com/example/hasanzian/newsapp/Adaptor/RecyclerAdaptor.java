@@ -18,6 +18,9 @@ import com.example.hasanzian.newsapp.Utils.QueryUtils;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Adaptor for recycler view
  */
@@ -80,18 +83,22 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
      * myViewHolder class initializing view
      */
     class myViewHolder extends RecyclerView.ViewHolder {
-        TextView mHeading, mAuthorName, mSection, mDate;
-        ImageView mImageView, mAuthorImage;
+        @BindView(R.id.heading)
+        TextView mHeading;
+        @BindView(R.id.author)
+        TextView mAuthorName;
+        @BindView(R.id.section)
+        TextView mSection;
+        @BindView(R.id.date)
+        TextView mDate;
+        @BindView(R.id.image)
+        ImageView mImageView;
+        @BindView(R.id.authorImage)
+        ImageView mAuthorImage;
 
         myViewHolder(View itemView) {
             super(itemView);
-            mHeading = itemView.findViewById(R.id.heading);
-            mImageView = itemView.findViewById(R.id.image);
-            mAuthorName = itemView.findViewById(R.id.author);
-            mSection = itemView.findViewById(R.id.section);
-            mDate = itemView.findViewById(R.id.date);
-            mAuthorImage = itemView.findViewById(R.id.authorImage);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 
