@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.Utils.Model;
 import com.example.hasanzian.newsapp.Utils.QueryUtils;
@@ -65,13 +64,9 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         holder.mDate.setText(formattedString);
         holder.mSection.setText(mList.get(position).getSection());
         holder.mAuthorName.setText("by " + mList.get(position).getAuthor());
-        // holder.mImageView.setImageResource(R.color.colorAccent);
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.ic_launcher_foreground);
-        requestOptions.error(R.drawable.gurdian);
 
-        Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(mList.get(position).getImageUrl()).into(holder.mImageView);
-        Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(mList.get(position).getAuthorImage()).into(holder.mAuthorImage);
+        Glide.with(mContext).setDefaultRequestOptions(QueryUtils.requestOptions()).load(mList.get(position).getImageUrl()).into(holder.mImageView);
+        Glide.with(mContext).setDefaultRequestOptions(QueryUtils.requestOptions()).load(mList.get(position).getAuthorImage()).into(holder.mAuthorImage);
     }
 
     @Override

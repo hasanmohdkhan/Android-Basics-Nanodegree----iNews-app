@@ -8,6 +8,9 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.bumptech.glide.request.RequestOptions;
+import com.example.hasanzian.newsapp.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -146,8 +149,7 @@ public final class QueryUtils {
      */
     public static Typeface regularFont(Context mContext) {
         AssetManager assetManager = mContext.getApplicationContext().getAssets();
-        Typeface regularFont = Typeface.createFromAsset(assetManager, "fonts/Product Sans Regular.ttf");
-        return regularFont;
+        return Typeface.createFromAsset(assetManager, "fonts/Product Sans Regular.ttf");
     }
 
     /**
@@ -158,7 +160,13 @@ public final class QueryUtils {
      */
     public static Typeface headingFont(Context mContext) {
         AssetManager assetManager = mContext.getApplicationContext().getAssets();
-        Typeface headingFont = Typeface.createFromAsset(assetManager, "fonts/Product Sans Bold.ttf");
-        return headingFont;
+        return Typeface.createFromAsset(assetManager, "fonts/Product Sans Bold.ttf");
+    }
+
+    public static RequestOptions requestOptions() {
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.ic_launcher_foreground);
+        requestOptions.error(R.drawable.gurdian);
+        return requestOptions;
     }
 }
