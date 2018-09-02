@@ -8,20 +8,12 @@ tools:context="com.example.hasanzian.newsapp.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:scrollbars="vertical"
+        style="@style/RecyclerViewStyle"
         tools:listitem="@layout/list_item" />
 
     <TextView
         android:id="@+id/empty_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAppearance="?android:textAppearanceMedium"
+        style="@style/EmptyTextView"
         tools:text="No Data found" />
 
     <ProgressBar
@@ -33,12 +25,8 @@ tools:context="com.example.hasanzian.newsapp.MainActivity">
 
     <ProgressBar
         android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/recycler_view"
-        android:layout_centerInParent="true"
-        android:layout_margin="4dp"
-        android:background="@color/FooterColor" />
+        style="@style/Footer"
+        android:layout_alignBottom="@id/recycler_view" />
 
 
 </RelativeLayout>
