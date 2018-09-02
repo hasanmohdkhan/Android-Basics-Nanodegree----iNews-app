@@ -44,12 +44,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 50;
+
     @BindView(R.id.footer)
     ProgressBar footer; // when scrolling is done
+
     @BindView(R.id.loading_indicator)
     View indicator; // shown when 1st time load app is loaded
+
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+
     private String API_KEY = "&api-key=" + BuildConfig.ApiKey;
 
     @Override

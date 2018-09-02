@@ -67,7 +67,7 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         holder.mAuthorName.setText("by " + mList.get(position).getAuthor());
         // holder.mImageView.setImageResource(R.color.colorAccent);
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.color.colorAccent);
+        requestOptions.placeholder(R.drawable.ic_launcher_foreground);
         requestOptions.error(R.drawable.gurdian);
 
         Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(mList.get(position).getImageUrl()).into(holder.mImageView);

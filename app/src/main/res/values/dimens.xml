@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="card_image_margin">8dp</dimen>
+    <dimen name="dimen_100dp">100dp</dimen>
+    <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_18sp">18sp</dimen>
+    <dimen name="dimen_40dp">40dp</dimen>
+    <dimen name="dimens_16dp">16dp</dimen>
+    <dimen name="dimen_1dp">1dp</dimen>
+
 </resources>

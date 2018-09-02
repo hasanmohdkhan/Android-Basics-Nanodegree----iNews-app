@@ -1,0 +1,88 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CardViewCustom">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_8dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_8dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_8dp</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+
+    <style name="MatchWrap">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="StoryImageCard">
+        <item name="android:layout_height">@dimen/dimen_100dp</item>
+        <item name="android:layout_width">@dimen/dimen_100dp</item>
+        <item name="android:layout_marginTop">@dimen/dimen_4dp</item>
+        <item name="android:layout_margin">@dimen/dimen_4dp</item>
+    </style>
+
+    <style name="StoryImage">
+        <item name="android:layout_height">@dimen/dimen_100dp</item>
+        <item name="android:layout_width">@dimen/dimen_100dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="StoryHeading">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/margin_8dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_8dp</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:layout_marginTop">@dimen/dimen_4dp</item>
+        <item name="android:textColor">@color/HeadingColor</item>
+        <item name="android:textSize">@dimen/dimen_18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SectionText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/margin_8dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_8dp</item>
+        <item name="android:textColor">@color/SectionColor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/dimen_1dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_1dp</item>
+    </style>
+
+    <style name="DateText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/margin_8dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_8dp</item>
+        <item name="android:textColor">@color/TimeColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AuthorText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginLeft">@dimen/margin_8dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_8dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_8dp</item>
+        <item name="android:textColor">@color/AuthorNameColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AuthorImage">
+        <item name="android:layout_width">@dimen/dimen_40dp</item>
+        <item name="android:layout_height">@dimen/dimen_40dp</item>
+        <item name="android:layout_margin">@dimen/dimen_4dp</item>
+
+    </style>
+</resources>
