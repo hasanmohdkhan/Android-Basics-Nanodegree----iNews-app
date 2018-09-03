@@ -64,7 +64,7 @@
                 style="@style/AuthorImage"
                 android:layout_below="@+id/card_image"
                 android:elevation="1dp"
-                tools:src="@drawable/ic_action_user" />
+                tools:src="@drawable/gurdian" />
         </RelativeLayout>
 
 

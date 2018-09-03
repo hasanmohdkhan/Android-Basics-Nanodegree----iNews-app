@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 50;
 
+
     @BindView(R.id.footer)
     ProgressBar footer; // when scrolling is done
 
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             loaderManager = getLoaderManager();
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
         } else {
-            showNotConnected();
+            showNotConnected(String.valueOf(R.string.no_internet));
         }
 
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplication(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     loaderManager.restartLoader(1, null, MainActivity.this);
                     mAdaptor.notifyDataSetChanged();
                 } else {
-                    showNotConnected();
+                    showNotConnected("No data available");
                     mList.clear();
                     mAdaptor.notifyDataSetChanged();
                 }
@@ -135,10 +136,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-    private void showNotConnected() {
-        indicator.setVisibility(View.GONE);
+    private void showNotConnected(String string) {
         mEmptyStateTextView.setVisibility(View.VISIBLE);
-        mEmptyStateTextView.setText(R.string.no_internet);
+        mEmptyStateTextView.setText(string);
+        indicator.setVisibility(View.GONE);
     }
 
     @Override
@@ -151,13 +152,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Model>> loader, List<Model> list) {
-        mList.addAll(list);  // list
+        if (QueryUtils.NO_DATA.contains("NO data available")) {
+            Log.d("List", "" + list);
+            showNotConnected("No data available");
+            mRecyclerView.setVisibility(View.GONE);
+        } else if (QueryUtils.CODE.contains("Code: ")) {
+            Log.d("Main", QueryUtils.CODE);
+            showNotConnected(QueryUtils.CODE);
+            mRecyclerView.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mList.addAll(list);  // list
+            // Hide loading indicator because the data has been loaded
+            indicator.setVisibility(View.GONE);
+            footer.setVisibility(View.GONE);
+            mEmptyStateTextView.setVisibility(View.GONE);
+            mAdaptor.notifyDataSetChanged();
 
-        // Hide loading indicator because the data has been loaded
-        indicator.setVisibility(View.GONE);
-        footer.setVisibility(View.GONE);
-        mEmptyStateTextView.setVisibility(View.GONE);
-        mAdaptor.notifyDataSetChanged();
+        }
+
     }
 
     @Override

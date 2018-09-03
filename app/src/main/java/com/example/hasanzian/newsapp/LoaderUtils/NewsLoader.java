@@ -19,6 +19,7 @@ import java.util.List;
  */
 
 public class NewsLoader extends AsyncTaskLoader<List<Model>> {
+
     /**
      * Tag for log messages
      */
@@ -51,7 +52,12 @@ public class NewsLoader extends AsyncTaskLoader<List<Model>> {
         try {
             //getting Json String
             jsonString = httpHandler.makeHttpRequest(createUrl(mUrl));
-            list = QueryUtils.extractNews(jsonString);
+            if (jsonString.contains("Code: ")) {
+                Log.e("CODE", jsonString);
+                QueryUtils.CODE = jsonString;
+            } else {
+                list = QueryUtils.extractNews(jsonString);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

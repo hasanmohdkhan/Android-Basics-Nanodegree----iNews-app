@@ -27,7 +27,8 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
  * Helper methods related to requesting and receiving News data from Guardian
  */
 public final class QueryUtils {
-
+    public static String CODE = "";
+    public static String NO_DATA = "";
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
      * This class is only meant to hold static variables and methods, which can be accessed
@@ -61,6 +62,9 @@ public final class QueryUtils {
             JSONObject responseObject = root.getJSONObject("response");
             // Extracting result object from response object
             JSONArray resultsArray = responseObject.getJSONArray("results");
+            if (resultsArray.length() == 0) {
+                NO_DATA = "NO data available";
+            }
             //for loop for extracting each objects
             for (int i = 0; i < resultsArray.length(); i++) {
                 String authorName = "";
@@ -163,6 +167,11 @@ public final class QueryUtils {
         return Typeface.createFromAsset(assetManager, "fonts/Product Sans Bold.ttf");
     }
 
+    /**
+     * Glide place holder setup
+     *
+     * @return RequestOptions
+     */
     public static RequestOptions requestOptions() {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.ic_launcher_foreground);

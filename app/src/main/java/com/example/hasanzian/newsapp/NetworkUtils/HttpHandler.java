@@ -41,6 +41,8 @@ public class HttpHandler {
                 Log.e("responseCode ", "response code: " + urlConnection.getResponseCode());
             } else {
                 Log.e("responseCode ", "Error response code: " + urlConnection.getResponseCode());
+                jsonResponse = "Code: " + urlConnection.getResponseCode();
+                Log.e("Json", jsonResponse);
             }
 
 
@@ -62,6 +64,11 @@ public class HttpHandler {
     }
 
     private String convertInputStreamToJsonString(InputStream inputStream) {
+
+
+
+
+
         /* Java.io.BufferedReader class reads text from a character-input stream,
          * buffering characters so as to provide for the efficient
          * reading of sequence of characters
