@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             loaderManager = getLoaderManager();
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
         } else {
-            showNotConnected(String.valueOf(R.string.no_internet));
+            showNotConnected("No internet available");
         }
 
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplication(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
@@ -152,9 +152,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Model>> loader, List<Model> list) {
-        if (QueryUtils.NO_DATA.contains("NO data available")) {
+        if (QueryUtils.NO_DATA.contains(getString(R.string.no_data_available))) {
             Log.d("List", "" + list);
-            showNotConnected("No data available");
+            showNotConnected(getString(R.string.no_data_available));
             mRecyclerView.setVisibility(View.GONE);
         } else if (QueryUtils.CODE.contains("Code: ")) {
             Log.d("Main", QueryUtils.CODE);
