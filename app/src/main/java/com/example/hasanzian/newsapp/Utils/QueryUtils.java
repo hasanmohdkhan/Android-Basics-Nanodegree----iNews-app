@@ -28,7 +28,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
  */
 public final class QueryUtils {
     public static String CODE = "";
-    public static String NO_DATA = "";
+
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
      * This class is only meant to hold static variables and methods, which can be accessed
@@ -48,7 +48,6 @@ public final class QueryUtils {
         if (TextUtils.isEmpty(jsonString)) {
             return null;
         }
-
         // Create an empty ArrayList that we can start adding iNews to list
         ArrayList<Model> iNews = new ArrayList<>();
 
@@ -60,39 +59,48 @@ public final class QueryUtils {
             JSONObject root = new JSONObject(jsonString);
             // Extracting the response object
             JSONObject responseObject = root.getJSONObject("response");
-            // Extracting result object from response object
-            JSONArray resultsArray = responseObject.getJSONArray("results");
-            if (resultsArray.length() == 0) {
-                NO_DATA = "NO data available";
-            }
-            //for loop for extracting each objects
-            for (int i = 0; i < resultsArray.length(); i++) {
-                String authorName = "";
-                String authorImage = "";
-                JSONObject currentObject = resultsArray.getJSONObject(i);
-                String webTitle = currentObject.getString("webTitle");
-                String sectionName = currentObject.getString("sectionName");
-                String date = currentObject.getString("webPublicationDate");
-                String webUrl = currentObject.getString("webUrl");
-                JSONObject fields = currentObject.getJSONObject("fields");
-                String thumbnail = fields.getString("thumbnail");
-                JSONArray tagsArray = currentObject.getJSONArray("tags");
-                // check if tag array has any entry or not
-                if (tagsArray.length() == 0) {
-                    authorName = "Guardian";
-                } else {
-                    for (int j = 0; j < tagsArray.length(); j++) {
-                        JSONObject tagObject = tagsArray.getJSONObject(j);
-                        authorName = tagObject.getString("webTitle");
-                        if (tagObject.has("bylineImageUrl")) {
-                            authorImage = tagObject.getString("bylineImageUrl");
+            if (responseObject != null) {
+                // Extracting result object from response object
+                JSONArray resultsArray = responseObject.getJSONArray("results");
+
+                if (resultsArray != null) {
+                    //for loop for extracting each objects
+                    for (int i = 0; i < resultsArray.length(); i++) {
+                        String authorName = "";
+                        String authorImage = "";
+                        JSONObject currentObject = resultsArray.getJSONObject(i);
+                        if (currentObject != null) {
+                            String webTitle = currentObject.getString("webTitle");
+                            String sectionName = currentObject.getString("sectionName");
+                            String date = currentObject.getString("webPublicationDate");
+                            String webUrl = currentObject.getString("webUrl");
+                            JSONObject fields = currentObject.getJSONObject("fields");
+                            String thumbnail = fields.getString("thumbnail");
+                            JSONArray tagsArray = currentObject.getJSONArray("tags");
+                            if (tagsArray != null) {
+                                // check if tag array has any entry or not
+                                if (tagsArray.length() == 0) {
+                                    authorName = "Guardian";
+                                } else {
+                                    for (int j = 0; j < tagsArray.length(); j++) {
+                                        JSONObject tagObject = tagsArray.getJSONObject(j);
+                                        authorName = tagObject.getString("webTitle");
+                                        if (tagObject.has("bylineImageUrl")) {
+                                            authorImage = tagObject.getString("bylineImageUrl");
+                                        }
+                                    }
+                                }
+                            }
+                            //Initialize and add news item to list
+                            Model model = new Model(webTitle, webUrl, thumbnail, date, sectionName, authorName, authorImage);
+                            iNews.add(model);
                         }
                     }
+
                 }
 
-                Model model = new Model(webTitle, webUrl, thumbnail, date, sectionName, authorName, authorImage);
-                iNews.add(model);
             }
+
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,

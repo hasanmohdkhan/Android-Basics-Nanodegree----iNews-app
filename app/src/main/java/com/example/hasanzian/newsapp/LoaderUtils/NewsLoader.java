@@ -52,12 +52,7 @@ public class NewsLoader extends AsyncTaskLoader<List<Model>> {
         try {
             //getting Json String
             jsonString = httpHandler.makeHttpRequest(createUrl(mUrl));
-            if (jsonString.contains("Code: ")) {
-                Log.e("CODE", jsonString);
-                QueryUtils.CODE = jsonString;
-            } else {
-                list = QueryUtils.extractNews(jsonString);
-            }
+            list = QueryUtils.extractNews(jsonString);
 
         } catch (IOException e) {
             e.printStackTrace();

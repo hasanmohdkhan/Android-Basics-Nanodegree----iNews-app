@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#2196f3</color>
+    <color name="colorPrimaryDark">#01579b</color>
+    <color name="colorAccent">#ffffff</color>
     <color name="TimeColor">#A2A2A3</color>
     <color name="SectionColor">#cfd8dc</color>
     <color name="HeadingColor">#443F45</color>

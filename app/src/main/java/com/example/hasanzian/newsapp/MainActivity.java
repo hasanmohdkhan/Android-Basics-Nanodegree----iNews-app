@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             loaderManager = getLoaderManager();
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
         } else {
-            showNotConnected("No internet available");
+            showNotConnected(getString(R.string.no_internet));
         }
 
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplication(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
@@ -110,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     loaderManager.restartLoader(1, null, MainActivity.this);
                     mAdaptor.notifyDataSetChanged();
                 } else {
-                    showNotConnected("No data available");
+                    showNotConnected("No internet");
+                    footer.setVisibility(View.GONE);
                     mList.clear();
                     mAdaptor.notifyDataSetChanged();
                 }
@@ -152,13 +153,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Model>> loader, List<Model> list) {
-        if (QueryUtils.NO_DATA.contains(getString(R.string.no_data_available))) {
-            Log.d("List", "" + list);
-            showNotConnected(getString(R.string.no_data_available));
+        if (list == null && mList.size() > 0) {
+            Log.d("List return", "" + list.size() + " mlist" + mList.size());
+            showNotConnected("Unable to connect !!!");
             mRecyclerView.setVisibility(View.GONE);
-        } else if (QueryUtils.CODE.contains("Code: ")) {
-            Log.d("Main", QueryUtils.CODE);
-            showNotConnected(QueryUtils.CODE);
+            return;
+        } else if (list.isEmpty()) {
+            Log.d("No data", "" + list);
+            showNotConnected(getString(R.string.no_data_available));
             mRecyclerView.setVisibility(View.GONE);
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);

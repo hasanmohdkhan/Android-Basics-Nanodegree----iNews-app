@@ -14,6 +14,7 @@ tools:context="com.example.hasanzian.newsapp.MainActivity">
     <TextView
         android:id="@+id/empty_view"
         style="@style/EmptyTextView"
+        android:layout_centerInParent="true"
         tools:text="No Data found" />
 
     <ProgressBar
