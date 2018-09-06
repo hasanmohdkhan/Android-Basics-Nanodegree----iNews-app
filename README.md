@@ -6,8 +6,8 @@ News App is developed as part of Udacity Android Basics Nanodegree under Google 
 
 ### **Portrait layouts:**
 
-![screenshots]()   
-![screenshots2]()
+![screenshots](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/MainActivity.png)   
+![screenshots2](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/internet%20connection.png)
 
 ![screenshots3]()   
 ![screenshots4]()
