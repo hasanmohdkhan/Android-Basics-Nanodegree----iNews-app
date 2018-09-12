@@ -1,4 +1,4 @@
-package com.example.hasanzian.newsapp.NetworkUtils;
+package com.example.hasanzian.newsapp.networkUtils;
 
 import android.util.Log;
 

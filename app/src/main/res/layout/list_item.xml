@@ -17,7 +17,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/card_image"
                 style="@style/StoryImageCard"
-                app:cardCornerRadius="@dimen/margin_8dp"
+                app:cardCornerRadius="@dimen/dimen_8dp"
                 app:cardElevation="@dimen/dimen_4dp">
 
                 <ImageView

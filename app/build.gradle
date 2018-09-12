@@ -12,12 +12,12 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', "ApiKey",  iNews_gurdian_ApiKey
+            buildConfigField 'String', "ApiKey", iNews_gurdian_ApiKey
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', "ApiKey",  iNews_gurdian_ApiKey
+            buildConfigField 'String', "ApiKey", iNews_gurdian_ApiKey
         }
     }
 }
@@ -31,6 +31,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     //glide library
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.android.support:design:27.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //cardView
     implementation 'com.android.support:cardview-v7:27.1.1'

@@ -1,4 +1,4 @@
-package com.example.hasanzian.newsapp.Adaptor;
+package com.example.hasanzian.newsapp.adaptor;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hasanzian.newsapp.R;
-import com.example.hasanzian.newsapp.Utils.Model;
-import com.example.hasanzian.newsapp.Utils.QueryUtils;
+import com.example.hasanzian.newsapp.utils.Model;
+import com.example.hasanzian.newsapp.utils.QueryUtils;
 
 import java.util.List;
 

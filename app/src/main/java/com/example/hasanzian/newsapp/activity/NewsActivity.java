@@ -1,23 +1,31 @@
-package com.example.hasanzian.newsapp;
+package com.example.hasanzian.newsapp.activity;
 
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.hasanzian.newsapp.Adaptor.RecyclerAdaptor;
-import com.example.hasanzian.newsapp.LoaderUtils.NewsLoader;
-import com.example.hasanzian.newsapp.Utils.Model;
-import com.example.hasanzian.newsapp.Utils.QueryUtils;
+import com.example.hasanzian.newsapp.BuildConfig;
+import com.example.hasanzian.newsapp.PaginationScrollListener;
+import com.example.hasanzian.newsapp.R;
+import com.example.hasanzian.newsapp.RecyclerTouchListener;
+import com.example.hasanzian.newsapp.adaptor.RecyclerAdaptor;
+import com.example.hasanzian.newsapp.loaderUtils.NewsLoader;
+import com.example.hasanzian.newsapp.utils.Model;
+import com.example.hasanzian.newsapp.utils.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Model>> {
+public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Model>> {
     /**
      * Constant value for the News loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
@@ -34,26 +42,36 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     int pageNumber = 1;
     RecyclerAdaptor mAdaptor;
     LinearLayoutManager mLinearLayoutManager;
-    private static final String LOG_TAG = MainActivity.class.getName();
+    private static final String LOG_TAG = NewsActivity.class.getName();
     LoaderManager loaderManager;
+    private static final String NEWS_REQ_URL = "https://content.guardianapis.com/search";
+    private static final String QUARRY_FORMAT = "format";
+    private static final String FORMAT_VALUE = "json";
+    private static final String QUARRY_SEARCH = "q";
+    private static final String QUARRY_PAGE_SIZE = "page-size";
+    private static final String PAGE_SIZE_VALUE = "10";
+    private static final String QUARRY_API_KEY = "api-key";
+    private static final String API_KEY_VALUE = BuildConfig.ApiKey;
+    private static final String QUARRY_PAGE = "page";
+    private static final String QUARRY_SHOW_TAGS = "show-tags";
+    private static final String QUARRY_SHOW_FIELDS = "show-fields";
+    private static final String THUMBNAIL_VALUE = "thumbnail";
+    private static final String QUARRY_ORDER_BY = "order-by";
+    private static final String QUARRY_CONTRIBUTOR = "contributor";
     @BindView(R.id.empty_view)
-    TextView mEmptyStateTextView;
-    private String START_URL = "https://content.guardianapis.com/search?q=&format=json&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=newest&page=";
+    public TextView mEmptyStateTextView;
+    @BindView(R.id.footer)
+    public ProgressBar footer; // when scrolling is done
     private String URL_API;
     private List<Model> mList = new ArrayList<>();
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 50;
-
-
-    @BindView(R.id.footer)
-    ProgressBar footer; // when scrolling is done
-
     @BindView(R.id.loading_indicator)
-    View indicator; // shown when 1st time load app is loaded
-
+    public View indicator; // shown when 1st time load app is loaded
     @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerView;
+    private String START_URL = "https://content.guardianapis.com/search?q=&show-tags=contributor&show-fields=thumbnail&order-by=newest&page=";
 
     private String API_KEY = "&api-key=" + BuildConfig.ApiKey;
 
@@ -107,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     Log.d("Load More", "Current number: " + pageNumber);
                     Log.d("TAG", "RestartLoader on LoadMore");
                     URL_API = START_URL + pageNumber + API_KEY;
-                    loaderManager.restartLoader(1, null, MainActivity.this);
+                    loaderManager.restartLoader(1, null, NewsActivity.this);
                     mAdaptor.notifyDataSetChanged();
                 } else {
                     showNotConnected("No internet");
@@ -146,9 +164,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<Model>> onCreateLoader(int i, Bundle bundle) {
         Log.d(LOG_TAG, "onCreateLoader");
-        URL_API = START_URL + pageNumber + API_KEY;
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // getString retrieves a String value from the preferences. The second parameter is the default value for this preference.
+        String minPageSize = sharedPrefs.getString(getString(R.string.settings_min_page_key), getString(R.string.settings_min_page_default));
+
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(NEWS_REQ_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // Append query parameter and its value. For example, the `format=json`
+        uriBuilder.appendQueryParameter(QUARRY_SEARCH, "");
+        uriBuilder.appendQueryParameter(QUARRY_FORMAT, FORMAT_VALUE);
+        uriBuilder.appendQueryParameter(QUARRY_SHOW_TAGS, QUARRY_CONTRIBUTOR);
+        uriBuilder.appendQueryParameter(QUARRY_SHOW_FIELDS, THUMBNAIL_VALUE);
+        uriBuilder.appendQueryParameter(QUARRY_ORDER_BY, "newest");
+        uriBuilder.appendQueryParameter(QUARRY_PAGE_SIZE, minPageSize);
+        uriBuilder.appendQueryParameter(QUARRY_PAGE, String.valueOf(pageNumber));
+        uriBuilder.appendQueryParameter(QUARRY_API_KEY, API_KEY_VALUE);
+
+        Log.d("URL", uriBuilder.toString());
+
         // Create a new loader for the given URL
-        return new NewsLoader(this, URL_API);
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -180,5 +221,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Log.d(LOG_TAG, "onLoaderReset");
     }
 
+    @Override
+    // This method initialize the contents of the Activity's options menu.
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the Options Menu we specified in XML
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

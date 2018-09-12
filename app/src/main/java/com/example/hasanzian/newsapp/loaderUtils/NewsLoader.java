@@ -1,12 +1,12 @@
-package com.example.hasanzian.newsapp.LoaderUtils;
+package com.example.hasanzian.newsapp.loaderUtils;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.hasanzian.newsapp.NetworkUtils.HttpHandler;
-import com.example.hasanzian.newsapp.Utils.Model;
-import com.example.hasanzian.newsapp.Utils.QueryUtils;
+import com.example.hasanzian.newsapp.networkUtils.HttpHandler;
+import com.example.hasanzian.newsapp.utils.Model;
+import com.example.hasanzian.newsapp.utils.QueryUtils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

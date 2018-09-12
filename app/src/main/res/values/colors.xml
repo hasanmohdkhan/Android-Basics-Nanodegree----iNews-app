@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#01579b</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorAccent">#ffff8d</color>
     <color name="TimeColor">#A2A2A3</color>
     <color name="SectionColor">#cfd8dc</color>
     <color name="HeadingColor">#443F45</color>

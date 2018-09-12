@@ -1,4 +1,4 @@
-package com.example.hasanzian.newsapp.Utils;
+package com.example.hasanzian.newsapp.utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;
