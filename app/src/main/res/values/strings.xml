@@ -6,8 +6,27 @@
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">News Settings</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="settings_min_page_label">Minimum Page</string>
+
+    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">order_by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_newest_value</string>
+
+    <!-- Label for page size option [CHAR LIMIT=20] -->
+    <string name="settings_min_page_label">Minimum Page size</string>
     <string name="settings_min_page_key" translatable="false">min_magnitude</string>
     <string name="settings_min_page_default" translatable="false">10</string>
     <string name="settings_min_page_summary">Number of stories shown in list</string>
+
+    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_newest_label">Newest</string>
+    <string name="settings_order_by_newest_value" translatable="false">newest</string>
+    <!-- Label for order-by relevance option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_relevance_value">relevance</string>
+    <string name="settings_order_by_relevance_label">Relevance</string>
+
+    <string name="settings_order_by_oldest_value">oldest</string>
+    <string name="settings_order_by_oldest_label">Oldest</string>
+    <string name="search">Search</string>
+
 </resources>

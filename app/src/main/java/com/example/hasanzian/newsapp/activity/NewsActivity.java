@@ -7,16 +7,19 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hasanzian.newsapp.BuildConfig;
 import com.example.hasanzian.newsapp.PaginationScrollListener;
@@ -74,6 +77,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     private String START_URL = "https://content.guardianapis.com/search?q=&show-tags=contributor&show-fields=thumbnail&order-by=newest&page=";
 
     private String API_KEY = "&api-key=" + BuildConfig.ApiKey;
+    private String query = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +173,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // getString retrieves a String value from the preferences. The second parameter is the default value for this preference.
         String minPageSize = sharedPrefs.getString(getString(R.string.settings_min_page_key), getString(R.string.settings_min_page_default));
+        String orderBy = sharedPrefs.getString(getString(R.string.settings_order_by_key), getString(R.string.settings_order_by_default));
 
         // parse breaks apart the URI string that's passed into its parameter
         Uri baseUri = Uri.parse(NEWS_REQ_URL);
@@ -177,11 +182,11 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         // Append query parameter and its value. For example, the `format=json`
-        uriBuilder.appendQueryParameter(QUARRY_SEARCH, "");
+        uriBuilder.appendQueryParameter(QUARRY_SEARCH, query);
         uriBuilder.appendQueryParameter(QUARRY_FORMAT, FORMAT_VALUE);
         uriBuilder.appendQueryParameter(QUARRY_SHOW_TAGS, QUARRY_CONTRIBUTOR);
         uriBuilder.appendQueryParameter(QUARRY_SHOW_FIELDS, THUMBNAIL_VALUE);
-        uriBuilder.appendQueryParameter(QUARRY_ORDER_BY, "newest");
+        uriBuilder.appendQueryParameter(QUARRY_ORDER_BY, orderBy);
         uriBuilder.appendQueryParameter(QUARRY_PAGE_SIZE, minPageSize);
         uriBuilder.appendQueryParameter(QUARRY_PAGE, String.valueOf(pageNumber));
         uriBuilder.appendQueryParameter(QUARRY_API_KEY, API_KEY_VALUE);
@@ -226,6 +231,28 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the Options Menu we specified in XML
         getMenuInflater().inflate(R.menu.main, menu);
+        // Associate searchable configuration with the SearchView
+
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                s = s + query;
+                loaderManager.restartLoader(1, null, NewsActivity.this);
+                mAdaptor.notifyDataSetChanged();
+
+                Toast.makeText(getApplicationContext(), "" + s, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
         return true;
     }
 
