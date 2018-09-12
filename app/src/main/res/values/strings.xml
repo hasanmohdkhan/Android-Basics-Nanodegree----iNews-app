@@ -9,5 +9,5 @@
     <string name="settings_min_page_label">Minimum Page</string>
     <string name="settings_min_page_key" translatable="false">min_magnitude</string>
     <string name="settings_min_page_default" translatable="false">10</string>
-    <string name="settings_min_page_summary">No. of story shown in list</string>
+    <string name="settings_min_page_summary">Number of stories shown in list</string>
 </resources>
