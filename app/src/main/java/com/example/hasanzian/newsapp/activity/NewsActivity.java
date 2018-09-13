@@ -72,9 +72,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     public View indicator; // shown when 1st time load app is loaded
     @BindView(R.id.recycler_view)
     public RecyclerView mRecyclerView;
-    private String START_URL = "https://content.guardianapis.com/search?q=&show-tags=contributor&show-fields=thumbnail&order-by=newest&page=";
-
-    private String API_KEY = "&api-key=" + BuildConfig.ApiKey;
     private String query = "";
 
     @Override
