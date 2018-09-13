@@ -4,7 +4,10 @@
     tools:context="com.example.hasanzian.newsapp.activity.NewsActivity">
     <item
         android:id="@+id/action_settings"
-        android:title="@string/settings_menu_item" />
+        android:icon="@drawable/tune"
+        android:orderInCategory="1"
+        android:title="@string/settings_menu_item"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_search"

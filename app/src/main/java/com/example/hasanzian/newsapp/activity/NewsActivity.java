@@ -46,7 +46,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     RecyclerAdaptor mAdaptor;
     LinearLayoutManager mLinearLayoutManager;
     private static final String LOG_TAG = NewsActivity.class.getName();
-    LoaderManager loaderManager;
+    private LoaderManager loaderManager;
     private static final String NEWS_REQ_URL = "https://content.guardianapis.com/search";
     private static final String QUARRY_FORMAT = "format";
     private static final String FORMAT_VALUE = "json";
