@@ -22,13 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hasanzian.newsapp.BuildConfig;
-import com.example.hasanzian.newsapp.PaginationScrollListener;
 import com.example.hasanzian.newsapp.R;
-import com.example.hasanzian.newsapp.RecyclerTouchListener;
 import com.example.hasanzian.newsapp.adaptor.RecyclerAdaptor;
 import com.example.hasanzian.newsapp.loaderUtils.NewsLoader;
 import com.example.hasanzian.newsapp.utils.Model;
+import com.example.hasanzian.newsapp.utils.PaginationScrollListener;
 import com.example.hasanzian.newsapp.utils.QueryUtils;
+import com.example.hasanzian.newsapp.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;

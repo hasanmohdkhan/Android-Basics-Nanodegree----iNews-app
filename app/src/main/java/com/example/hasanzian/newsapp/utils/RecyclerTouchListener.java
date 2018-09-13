@@ -1,4 +1,4 @@
-package com.example.hasanzian.newsapp;
+package com.example.hasanzian.newsapp.utils;
 
 /**
  * Recycler TouchListener

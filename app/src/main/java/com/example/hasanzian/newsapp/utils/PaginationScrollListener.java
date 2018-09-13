@@ -1,4 +1,4 @@
-package com.example.hasanzian.newsapp;
+package com.example.hasanzian.newsapp.utils;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
