@@ -74,7 +74,8 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginLeft">@dimen/margin_8dp</item>
         <item name="android:layout_marginRight">@dimen/margin_8dp</item>
-        <item name="android:layout_marginTop">@dimen/margin_8dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8dp</item>
         <item name="android:textColor">@color/AuthorNameColor</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -95,7 +96,6 @@
     <style name="EmptyTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_centerInParent">true</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/HeadingColor</item>
@@ -110,4 +110,6 @@
         <item name="android:layout_margin">@dimen/margin_8dp</item>
         <item name="android:background">@color/FooterColor</item>
     </style>
+
+    <dimen name="margin_16dp">16dp</dimen>
 </resources>

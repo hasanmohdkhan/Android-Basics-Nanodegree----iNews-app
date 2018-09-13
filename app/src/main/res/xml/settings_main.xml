@@ -13,6 +13,17 @@
             android:selectAllOnFocus="true"
             android:summary="@string/settings_min_page_summary"
             android:title="@string/settings_min_page_label" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/settings_show_images_key"
+            android:summary="@string/settings_show_images_summary"
+            android:title="@string/settings_show_images_label" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/settings_show_images_author_key"
+            android:summary="@string/settings_show_images__author_summary"
+            android:title="@string/settings_show_images_author_label" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Sort News Stories">
@@ -24,5 +35,6 @@
             android:key="@string/settings_order_by_key"
             android:title="@string/settings_order_by_label" />
     </PreferenceCategory>
+
 
 </PreferenceScreen>

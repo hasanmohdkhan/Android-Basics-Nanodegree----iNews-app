@@ -14,57 +14,77 @@
 
         <RelativeLayout style="@style/MatchWrap">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_image"
-                style="@style/StoryImageCard"
-                app:cardCornerRadius="@dimen/dimen_8dp"
-                app:cardElevation="@dimen/dimen_4dp">
+            <LinearLayout
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/image"
-                    style="@style/StoryImage"
-                    android:contentDescription="@string/thumnail"
-                    tools:src="@drawable/ic_launcher_foreground" />
-            </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_image"
+                    style="@style/StoryImageCard"
+                    app:cardCornerRadius="@dimen/dimen_8dp"
+                    app:cardElevation="@dimen/dimen_4dp">
 
-            <TextView
-                android:id="@+id/heading"
-                style="@style/StoryHeading"
-                android:layout_toEndOf="@+id/card_image"
-                android:layout_toRightOf="@+id/card_image"
-                tools:text="US Open 2018, day one: Nadal, Serena and Murray through, Halep out – as it happened" />
+                    <ImageView
+                        android:id="@+id/image"
+                        style="@style/StoryImage"
+                        android:contentDescription="@string/thumnail"
+                        tools:src="@drawable/ic_launcher_foreground" />
 
 
-            <TextView
-                android:id="@+id/section"
-                style="@style/SectionText"
-                android:layout_below="@id/heading"
-                android:layout_toEndOf="@id/card_image"
-                android:layout_toRightOf="@id/card_image"
-                tools:text="Section" />
+                </android.support.v7.widget.CardView>
 
-            <TextView
-                android:id="@+id/date"
-                style="@style/DateText"
-                android:layout_below="@id/section"
-                android:layout_toEndOf="@id/card_image"
-                android:layout_toRightOf="@id/card_image"
-                tools:text="21 Augest 2017" />
 
-            <TextView
-                android:id="@+id/author"
-                style="@style/AuthorText"
-                android:layout_alignTop="@+id/authorImage"
-                android:layout_toEndOf="@+id/authorImage"
-                android:layout_toRightOf="@+id/authorImage"
-                tools:text="By Author Name" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/authorImage"
-                style="@style/AuthorImage"
-                android:layout_below="@+id/card_image"
-                android:elevation="1dp"
-                tools:src="@drawable/gurdian" />
+                    <TextView
+                        android:id="@+id/heading"
+                        style="@style/StoryHeading"
+                        tools:text="US Open 2018, day one: Nadal, Serena and Murray through, Halep out – as it happened" />
+
+
+                    <TextView
+                        android:id="@+id/section"
+                        style="@style/SectionText"
+                        tools:text="Section" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        style="@style/DateText"
+                        tools:text="21 Augest 2017" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sub_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/authorImage"
+                    style="@style/AuthorImage"
+                    android:elevation="1dp"
+                    tools:src="@drawable/gurdian" />
+
+                <TextView
+                    android:id="@+id/author"
+                    style="@style/AuthorText"
+                    tools:text="By Author Name" />
+
+
+            </LinearLayout>
+
+
         </RelativeLayout>
 
 

@@ -15,7 +15,8 @@ android:layout_height="match_parent"
         android:id="@+id/empty_view"
         style="@style/EmptyTextView"
         android:layout_centerInParent="true"
-        tools:text="No Data found" />
+        android:layout_margin="@dimen/dimens_16dp"
+        tools:text="@string/no_internet" />
 
     <ProgressBar
         android:id="@+id/loading_indicator"

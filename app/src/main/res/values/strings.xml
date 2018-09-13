@@ -16,7 +16,7 @@
     <string name="settings_min_page_label">Minimum Page size</string>
     <string name="settings_min_page_key" translatable="false">min_magnitude</string>
     <string name="settings_min_page_default" translatable="false">10</string>
-    <string name="settings_min_page_summary">Number of stories shown in list</string>
+    <string name="settings_min_page_summary">List Settings</string>
 
     <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
     <string name="settings_order_by_newest_label">Newest</string>
@@ -29,4 +29,11 @@
     <string name="settings_order_by_oldest_label">Oldest</string>
     <string name="search">Search</string>
 
+    <string name="settings_show_images_label">Headline images</string>
+    <string name="settings_show_images_key">show_images</string>
+    <string name="settings_show_images_summary">Hide/show images in list</string>
+
+    <string name="settings_show_images_author_label">Author images</string>
+    <string name="settings_show_images_author_key">show_author_images</string>
+    <string name="settings_show_images__author_summary">Hide/show author images in list</string>
 </resources>

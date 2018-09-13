@@ -3,6 +3,7 @@ package com.example.hasanzian.newsapp.adaptor;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +68,18 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
 
         Glide.with(mContext).setDefaultRequestOptions(QueryUtils.requestOptions()).load(mList.get(position).getImageUrl()).into(holder.mImageView);
         Glide.with(mContext).setDefaultRequestOptions(QueryUtils.requestOptions()).load(mList.get(position).getAuthorImage()).into(holder.mAuthorImage);
+
+        if (QueryUtils.imageOptions(mContext)) {
+            holder.mStoryImage.setVisibility(View.GONE);
+        } else {
+            holder.mStoryImage.setVisibility(View.VISIBLE);
+        }
+        if (QueryUtils.authorImage(mContext)) {
+            holder.mAuthorImage.setVisibility(View.GONE);
+        } else {
+            holder.mAuthorImage.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -90,6 +103,9 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         ImageView mImageView;
         @BindView(R.id.authorImage)
         ImageView mAuthorImage;
+
+        @BindView(R.id.card_image)
+        CardView mStoryImage;
 
         myViewHolder(View itemView) {
             super(itemView);

@@ -52,7 +52,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String FORMAT_VALUE = "json";
     private static final String QUARRY_SEARCH = "q";
     private static final String QUARRY_PAGE_SIZE = "page-size";
-    private static final String PAGE_SIZE_VALUE = "10";
     private static final String QUARRY_API_KEY = "api-key";
     private static final String API_KEY_VALUE = BuildConfig.ApiKey;
     private static final String QUARRY_PAGE = "page";
@@ -65,7 +64,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     public TextView mEmptyStateTextView;
     @BindView(R.id.footer)
     public ProgressBar footer; // when scrolling is done
-    private String URL_API;
     private List<Model> mList = new ArrayList<>();
     private boolean isLoading = false;
     private boolean isLastPage = false;
@@ -84,7 +82,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         footer.setVisibility(View.INVISIBLE);
         mRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
@@ -128,7 +125,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                     pageNumber += 1;
                     Log.d("Load More", "Current number: " + pageNumber);
                     Log.d("TAG", "RestartLoader on LoadMore");
-                    URL_API = START_URL + pageNumber + API_KEY;
                     loaderManager.restartLoader(1, null, NewsActivity.this);
                     mAdaptor.notifyDataSetChanged();
                 } else {
@@ -174,7 +170,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // getString retrieves a String value from the preferences. The second parameter is the default value for this preference.
         String minPageSize = sharedPrefs.getString(getString(R.string.settings_min_page_key), getString(R.string.settings_min_page_default));
         String orderBy = sharedPrefs.getString(getString(R.string.settings_order_by_key), getString(R.string.settings_order_by_default));
-
         // parse breaks apart the URI string that's passed into its parameter
         Uri baseUri = Uri.parse(NEWS_REQ_URL);
 
@@ -238,10 +233,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                s = s + query;
+                query = query + s;
                 loaderManager.restartLoader(1, null, NewsActivity.this);
                 mAdaptor.notifyDataSetChanged();
-
                 Toast.makeText(getApplicationContext(), "" + s, Toast.LENGTH_SHORT).show();
                 return true;
             }

@@ -1,10 +1,12 @@
 package com.example.hasanzian.newsapp.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -185,5 +187,15 @@ public final class QueryUtils {
         requestOptions.placeholder(R.drawable.ic_launcher_foreground);
         requestOptions.error(R.drawable.gurdian);
         return requestOptions;
+    }
+
+    public static boolean imageOptions(Context mContext) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPrefs.getBoolean(mContext.getString(R.string.settings_show_images_key), true);
+    }
+
+    public static boolean authorImage(Context mContext) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPrefs.getBoolean(mContext.getString(R.string.settings_show_images_author_key), true);
     }
 }
