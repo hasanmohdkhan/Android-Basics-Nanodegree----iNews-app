@@ -9,8 +9,6 @@ import com.example.hasanzian.newsapp.utils.Model;
 import com.example.hasanzian.newsapp.utils.QueryUtils;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +49,7 @@ public class NewsLoader extends AsyncTaskLoader<List<Model>> {
         String jsonString = "";
         try {
             //getting Json String
-            jsonString = httpHandler.makeHttpRequest(createUrl(mUrl));
+            jsonString = httpHandler.makeHttpRequest(QueryUtils.createUrl(mUrl));
             list = QueryUtils.extractNews(jsonString);
 
         } catch (IOException e) {
@@ -60,17 +58,4 @@ public class NewsLoader extends AsyncTaskLoader<List<Model>> {
 
         return list;
     }
-
-    /* Returns new URL object from the given string URL.
-     */
-    private URL createUrl(String mUrl) {
-        URL url = null;
-        try {
-            url = new URL(mUrl);
-        } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Problem building the URL ", e);
-        }
-        return url;
-    }
-
 }

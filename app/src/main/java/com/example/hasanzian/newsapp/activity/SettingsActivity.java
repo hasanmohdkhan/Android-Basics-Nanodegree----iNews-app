@@ -29,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
             bindPreferenceSummaryToValue(orderBy);
             bindPreferenceSummaryToValue(pageSize);
 
+
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {

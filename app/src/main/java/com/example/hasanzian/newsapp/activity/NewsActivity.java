@@ -1,12 +1,16 @@
 package com.example.hasanzian.newsapp.activity;
 
 import android.app.LoaderManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,6 +29,7 @@ import com.example.hasanzian.newsapp.BuildConfig;
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.adaptor.RecyclerAdaptor;
 import com.example.hasanzian.newsapp.loaderUtils.NewsLoader;
+import com.example.hasanzian.newsapp.notification.NotificationJobScheduler;
 import com.example.hasanzian.newsapp.utils.Model;
 import com.example.hasanzian.newsapp.utils.PaginationScrollListener;
 import com.example.hasanzian.newsapp.utils.QueryUtils;
@@ -73,6 +78,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     @BindView(R.id.recycler_view)
     public RecyclerView mRecyclerView;
     private String query = "";
+    public static final String TAG = "Notification Service";
+    public static NotificationManagerCompat notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        notificationManager = NotificationManagerCompat.from(this);
 
         mAdaptor = new RecyclerAdaptor(mList);
         mRecyclerView.setAdapter(mAdaptor);
@@ -149,6 +157,26 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                 return isLoading;
             }
         });
+
+        if (QueryUtils.showNotification(this)) {
+
+            ComponentName componentName = new ComponentName(this, NotificationJobScheduler.class);
+            JobInfo info = new JobInfo.
+                    Builder(QueryUtils.JOB_ID, componentName).setPersisted(true).setPeriodic(15 * 60 * 1000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY).build();
+
+            JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            int resultCode = jobScheduler.schedule(info);
+            if (resultCode == JobScheduler.RESULT_SUCCESS) {
+                Log.d(TAG, "Job scheduled");
+            } else {
+                Log.d(TAG, "Job scheduling failed");
+            }
+
+        } else {
+            JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            jobScheduler.cancel(QueryUtils.JOB_ID);
+            Log.d(TAG, "Job cancelled");
+        }
 
     }
 

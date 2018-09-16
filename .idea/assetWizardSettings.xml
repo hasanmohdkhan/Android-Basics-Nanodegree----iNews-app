@@ -45,6 +45,38 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                            <entry key="notification">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="50" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\hasanZian\Downloads\text-lines.svg" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="NOTIFICATION" />
                           </map>
                         </option>
                       </PersistentState>
@@ -69,7 +101,7 @@
                             <entry key="height" value="512" />
                             <entry key="outputName" value="ic_text_lines" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\hasanZian\Downloads\text-lines.svg" />
+                            <entry key="sourceFile" value="C:\Users\hasanZian\Downloads\text-lines (1).svg" />
                             <entry key="width" value="512" />
                           </map>
                         </option>

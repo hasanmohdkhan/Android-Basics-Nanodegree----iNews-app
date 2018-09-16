@@ -36,4 +36,10 @@
     <string name="settings_show_images_author_label">Author images</string>
     <string name="settings_show_images_author_key">show_author_images</string>
     <string name="settings_show_images__author_summary">Hide/show author images in list</string>
+    <string name="settings_show_notification_label">Show Notification</string>
+    <string name="settings_show_notification_key">notification_key</string>
+    <string name="settings_show_notification_summary_off">Currently No notification</string>
+    <string name="settings_show_notification_summary_on">You have Notification</string>
+    <string name="settings_show_notification_summary">Show/Hide Notifications</string>
+    <string name="big_string_for_demo">US Open 2018, day one: Nadal, Serena and Murray through, Halep out – as it happened</string>
 </resources>

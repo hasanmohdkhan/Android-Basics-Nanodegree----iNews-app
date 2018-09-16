@@ -14,17 +14,29 @@
             android:summary="@string/settings_min_page_summary"
             android:title="@string/settings_min_page_label" />
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="@string/settings_show_images_key"
             android:summary="@string/settings_show_images_summary"
             android:title="@string/settings_show_images_label" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="@string/settings_show_images_author_key"
             android:summary="@string/settings_show_images__author_summary"
             android:title="@string/settings_show_images_author_label" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="Notification Settings">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/settings_show_notification_key"
+            android:summary="@string/settings_show_notification_summary"
+            android:summaryOff="@string/settings_show_notification_summary_off"
+            android:summaryOn="@string/settings_show_notification_summary_on"
+            android:title="@string/settings_show_notification_label" />
+
+    </PreferenceCategory>
+
 
     <PreferenceCategory android:title="Sort News Stories">
 

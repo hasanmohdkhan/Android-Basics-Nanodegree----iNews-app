@@ -1,22 +1,29 @@
 package com.example.hasanzian.newsapp.utils;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.example.hasanzian.newsapp.R;
+import com.example.hasanzian.newsapp.notification.AppNotificationChannel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +36,8 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
  * Helper methods related to requesting and receiving News data from Guardian
  */
 public final class QueryUtils {
-    public static String CODE = "";
+
+    public static final int JOB_ID = 1;
 
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
@@ -70,14 +78,21 @@ public final class QueryUtils {
                     for (int i = 0; i < resultsArray.length(); i++) {
                         String authorName = "";
                         String authorImage = "";
+                        String thumbnail = "";
                         JSONObject currentObject = resultsArray.getJSONObject(i);
                         if (currentObject != null) {
                             String webTitle = currentObject.getString("webTitle");
                             String sectionName = currentObject.getString("sectionName");
                             String date = currentObject.getString("webPublicationDate");
                             String webUrl = currentObject.getString("webUrl");
-                            JSONObject fields = currentObject.getJSONObject("fields");
-                            String thumbnail = fields.getString("thumbnail");
+                            //checking for fields here
+                            if (currentObject.has("fields")) {
+                                JSONObject fields = currentObject.getJSONObject("fields");
+                                thumbnail = fields.getString("thumbnail");
+                            } else {
+                                thumbnail = "NA";
+                            }
+
                             JSONArray tagsArray = currentObject.getJSONArray("tags");
                             if (tagsArray != null) {
                                 // check if tag array has any entry or not
@@ -197,5 +212,33 @@ public final class QueryUtils {
     public static boolean authorImage(Context mContext) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         return sharedPrefs.getBoolean(mContext.getString(R.string.settings_show_images_author_key), true);
+    }
+
+    public static boolean showNotification(Context mContext) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPrefs.getBoolean(mContext.getString(R.string.settings_show_notification_key), true);
+    }
+
+
+    public static void displayNotification(Context mContext, NotificationManagerCompat notificationManager, String bigContentTitle, String bigText) {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            Notification notification;
+            notification = new Notification.Builder(mContext, AppNotificationChannel.CHANNEL_1_ID).setSmallIcon(R.drawable.newspaper).setColor(mContext.getResources().getColor(R.color.colorPrimary)).setContentTitle(bigContentTitle).setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher_foreground)).setStyle(new Notification.BigTextStyle().bigText(bigText).setBigContentTitle(bigContentTitle).setSummaryText("Breaking News")).setCategory(NotificationCompat.CATEGORY_MESSAGE).setContentText(bigText).setPriority(Notification.PRIORITY_HIGH).build();
+            notificationManager.notify(1, notification);
+        }
+
+    }
+
+    /* Returns new URL object from the given string URL.
+     */
+    public static URL createUrl(String mUrl) {
+        URL url = null;
+        try {
+            url = new URL(mUrl);
+        } catch (MalformedURLException e) {
+            Log.e("CreateUrl", "Problem building the URL ", e);
+        }
+        return url;
     }
 }

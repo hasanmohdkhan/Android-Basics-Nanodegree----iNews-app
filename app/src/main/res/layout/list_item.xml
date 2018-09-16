@@ -44,7 +44,7 @@
                     <TextView
                         android:id="@+id/heading"
                         style="@style/StoryHeading"
-                        tools:text="US Open 2018, day one: Nadal, Serena and Murray through, Halep out – as it happened" />
+                        tools:text="@string/big_string_for_demo" />
 
 
                     <TextView

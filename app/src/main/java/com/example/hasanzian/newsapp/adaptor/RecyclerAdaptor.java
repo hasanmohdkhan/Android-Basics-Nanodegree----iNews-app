@@ -70,16 +70,15 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         Glide.with(mContext).setDefaultRequestOptions(QueryUtils.requestOptions()).load(mList.get(position).getAuthorImage()).into(holder.mAuthorImage);
 
         if (QueryUtils.imageOptions(mContext)) {
-            holder.mStoryImage.setVisibility(View.GONE);
-        } else {
             holder.mStoryImage.setVisibility(View.VISIBLE);
+        } else {
+            holder.mStoryImage.setVisibility(View.GONE);
         }
         if (QueryUtils.authorImage(mContext)) {
-            holder.mAuthorImage.setVisibility(View.GONE);
-        } else {
             holder.mAuthorImage.setVisibility(View.VISIBLE);
+        } else {
+            holder.mAuthorImage.setVisibility(View.GONE);
         }
-
     }
 
     @Override
