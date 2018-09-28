@@ -1,6 +1,10 @@
 package com.example.hasanzian.newsapp.utils;
 
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -17,6 +21,7 @@ import android.util.Log;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.notification.AppNotificationChannel;
+import com.example.hasanzian.newsapp.notification.NotificationJobScheduler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +36,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
+import static android.content.Context.JOB_SCHEDULER_SERVICE;
 
 /**
  * Helper methods related to requesting and receiving News data from Guardian
@@ -223,9 +229,15 @@ public final class QueryUtils {
     public static void displayNotification(Context mContext, NotificationManagerCompat notificationManager, String bigContentTitle, String bigText) {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int uniqueInteger = 0;
             Notification notification;
+            uniqueInteger = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+            Log.i("LOG_TAG_BUTIL", "Test : " + uniqueInteger);
             notification = new Notification.Builder(mContext, AppNotificationChannel.CHANNEL_1_ID).setSmallIcon(R.drawable.newspaper).setColor(mContext.getResources().getColor(R.color.colorPrimary)).setContentTitle(bigContentTitle).setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher_foreground)).setStyle(new Notification.BigTextStyle().bigText(bigText).setBigContentTitle(bigContentTitle).setSummaryText("Breaking News")).setCategory(NotificationCompat.CATEGORY_MESSAGE).setContentText(bigText).setPriority(Notification.PRIORITY_HIGH).build();
-            notificationManager.notify(1, notification);
+            NotificationManager nManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            // notificationManager.notify(uniqueInteger, builder.build());
+
+            nManager.notify(uniqueInteger, notification);
         }
 
     }
@@ -240,5 +252,31 @@ public final class QueryUtils {
             Log.e("CreateUrl", "Problem building the URL ", e);
         }
         return url;
+    }
+
+
+    public static void notificationTrigger(Context applicationContext) {
+
+        if (QueryUtils.showNotification(applicationContext)) {
+
+            ComponentName componentName = new ComponentName(applicationContext, NotificationJobScheduler.class);
+            JobInfo info = new JobInfo.
+                    Builder(QueryUtils.JOB_ID, componentName).setPersisted(true).setPeriodic(15 * 60 * 1000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY).build();
+
+            JobScheduler jobScheduler = (JobScheduler) applicationContext.getSystemService(JOB_SCHEDULER_SERVICE);
+            int resultCode = jobScheduler.schedule(info);
+            if (resultCode == JobScheduler.RESULT_SUCCESS) {
+                Log.d("Utils", "Job scheduled");
+            } else {
+                Log.d("Utils", "Job scheduling failed");
+            }
+
+        } else {
+            JobScheduler jobScheduler = (JobScheduler) applicationContext.getSystemService(JOB_SCHEDULER_SERVICE);
+            jobScheduler.cancel(QueryUtils.JOB_ID);
+            Log.d("Utils", "Job cancelled");
+        }
+
+
     }
 }
