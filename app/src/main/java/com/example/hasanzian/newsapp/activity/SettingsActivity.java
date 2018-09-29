@@ -7,6 +7,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.hasanzian.newsapp.R;
 
@@ -26,8 +27,10 @@ public class SettingsActivity extends AppCompatActivity {
 
             Preference pageSize = findPreference(getString(R.string.settings_min_page_key));
             Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
+            Preference notificationIntervals = findPreference(getString(R.string.settings_notifications_interval_key));
             bindPreferenceSummaryToValue(orderBy);
             bindPreferenceSummaryToValue(pageSize);
+            bindPreferenceSummaryToValue(notificationIntervals);
 
 
         }
@@ -36,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
             preference.setOnPreferenceChangeListener(this);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
             String preferenceString = preferences.getString(preference.getKey(), "");
+            Log.d("notify", preferenceString);
             onPreferenceChange(preference, preferenceString);
         }
 
@@ -49,10 +53,12 @@ public class SettingsActivity extends AppCompatActivity {
                 if (prefIndex >= 0) {
                     CharSequence[] labels = listPreference.getEntries();
                     preference.setSummary(labels[prefIndex]);
+                    Log.d("notify", stringValue + " " + prefIndex);
                 }
             } else {
                 preference.setSummary(stringValue);
             }
+
             return true;
         }
     }

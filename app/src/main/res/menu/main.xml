@@ -7,7 +7,7 @@
         android:icon="@drawable/tune"
         android:orderInCategory="1"
         android:title="@string/settings_menu_item"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|collapseActionView" />
 
     <item
         android:id="@+id/action_search"

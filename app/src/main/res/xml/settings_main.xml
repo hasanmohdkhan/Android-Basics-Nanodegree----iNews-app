@@ -26,7 +26,7 @@
             android:title="@string/settings_show_images_author_label" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Notification Settings">
+    <PreferenceCategory android:title="@string/settings_notification_category_label">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/settings_show_notification_key"
@@ -35,16 +35,25 @@
             android:summaryOn="@string/settings_show_notification_summary_on"
             android:title="@string/settings_show_notification_label" />
 
+        <ListPreference
+            android:defaultValue="@string/settings_notifications_interval_default"
+            android:entries="@array/settings_notifications_interval_labels"
+            android:entryValues="@array/settings_notifications_interval_value"
+            android:key="@string/settings_notifications_interval_key"
+            android:summary="@string/settings_notifications_interval_30min_label"
+            android:title="@string/settings_notifications_interval_label" />
+        />
+
     </PreferenceCategory>
 
-
-    <PreferenceCategory android:title="Sort News Stories">
+    <PreferenceCategory android:title="@string/settings_sort_story_label">
 
         <ListPreference
             android:defaultValue="@string/settings_order_by_default"
             android:entries="@array/settings_order_by_labels"
             android:entryValues="@array/settings_order_by_values"
             android:key="@string/settings_order_by_key"
+            android:summary="@string/settings_order_by_newest_value"
             android:title="@string/settings_order_by_label" />
     </PreferenceCategory>
 

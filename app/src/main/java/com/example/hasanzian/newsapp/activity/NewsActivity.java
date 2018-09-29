@@ -9,7 +9,6 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -41,8 +40,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.example.hasanzian.newsapp.utils.QueryUtils.JOB_ID;
 
 public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Model>> {
     /**
@@ -163,19 +160,13 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-
-//        mJobScheduler = JobScheduler.getInstance(this);
-//        constructJob(this);
-
-
         //   QueryUtils.notificationTrigger(this);
-
-
         if (QueryUtils.showNotification(this)) {
+
 
             ComponentName componentName = new ComponentName(this, NotificationJobScheduler.class);
             JobInfo info = new JobInfo.
-                    Builder(QueryUtils.JOB_ID, componentName).setPersisted(true).setPeriodic(15 * 60 * 1000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY).build();
+                    Builder(QueryUtils.JOB_ID, componentName).setPersisted(true).setPeriodic(QueryUtils.notificationDelay(this) * 60 * 1000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY).build();
 
             mJobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
             int resultCode = mJobScheduler.schedule(info);
@@ -192,17 +183,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
     }
-
-
-    private void constructJob(NewsActivity newsActivity) {
-        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(this, NotificationJobScheduler.class));
-        PersistableBundle persistableBundle = new PersistableBundle();
-        builder.setPeriodic(7200000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY).setPersisted(true);
-
-        mJobScheduler.schedule(builder.build());
-        Log.i(LOG_TAG, "Test : constructJob()");
-    }
-
 
     private void showNotConnected(String string) {
         mEmptyStateTextView.setVisibility(View.VISIBLE);

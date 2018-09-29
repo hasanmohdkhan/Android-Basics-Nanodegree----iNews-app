@@ -12,6 +12,12 @@
     <string name="settings_order_by_key" translatable="false">order_by</string>
     <string name="settings_order_by_default" translatable="false">@string/settings_order_by_newest_value</string>
 
+    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
+    <string name="settings_notifications_interval_label">Notify me</string>
+    <string name="settings_notifications_interval_key" translatable="false">notify</string>
+    <string name="settings_notifications_interval_default" translatable="false">@string/settings_notifications_interval_30min_value</string>
+
+
     <!-- Label for page size option [CHAR LIMIT=20] -->
     <string name="settings_min_page_label">Minimum Page size</string>
     <string name="settings_min_page_key" translatable="false">min_magnitude</string>
@@ -42,4 +48,14 @@
     <string name="settings_show_notification_summary_on">You have Notification</string>
     <string name="settings_show_notification_summary">Show/Hide Notifications</string>
     <string name="big_string_for_demo">US Open 2018, day one: Nadal, Serena and Murray through, Halep out – as it happened</string>
+
+    <!--notification interval labels-->
+    <string name="settings_notifications_interval_30min_label">Every 30 min</string>
+    <string name="settings_notifications_interval_1hrs_label">Every hour</string>
+    <!--notification interval values -->
+    <string name="settings_notifications_interval_30min_value">18</string>
+    <string name="settings_notifications_interval_1hrs_value">36</string>
+    <string name="settings_notification_category_label">Notification Settings</string>
+    <string name="settings_sort_story_label">Sort News Stories</string>
+
 </resources>

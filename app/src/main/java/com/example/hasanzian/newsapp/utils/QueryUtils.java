@@ -279,4 +279,10 @@ public final class QueryUtils {
 
 
     }
+
+    public static int notificationDelay(Context context) {
+        SharedPreferences delay = PreferenceManager.getDefaultSharedPreferences(context);
+        String string = delay.getString(context.getString(R.string.settings_notifications_interval_key), context.getString(R.string.settings_notifications_interval_30min_value));
+        return Integer.parseInt(string);
+    }
 }
