@@ -27,7 +27,7 @@ Settings | More Control
 ![image](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/nightmode2.png) |![image](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/noti2.png) 
 
 ## **Notifications**
-iNews comes with notification.You have options to turn on/off notifications,control timing off notification. 
+iNews comes with notification.You have options to turn on/off notifications,control timing of notification. 
 
 Notifications | Notification Settings 
 -----------------|---------------- 
