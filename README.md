@@ -14,5 +14,5 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" />     | right-al
 
 ### **Portrait layouts:**
 
-![screenshots](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/MainActivity.png)   ![screenshots2](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/internet%20connection.png)
+![screenshots](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/MainActivity.png =250x250)   ![screenshots2](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/internet%20connection.png)
 ![screenshots](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/settings.png) 
