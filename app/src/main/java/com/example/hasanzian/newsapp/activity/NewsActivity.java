@@ -83,6 +83,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     private String query = "";
     public static final String TAG = "Notification Service";
     public static NotificationManagerCompat notificationManager;
+    @BindView(R.id.main_screen)
+    View mainScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mEmptyStateTextView.setTypeface(QueryUtils.headingFont(this));
         mEmptyStateTextView.setVisibility(View.VISIBLE);
+
+        mainScreen.setBackgroundColor(getResources().getColor(R.color.colorPrimaryTheme));
+        mEmptyStateTextView.setTextColor(getResources().getColor(R.color.TextPrimary));
 
         if (QueryUtils.isConnectedToNetwork(this)) {
             mEmptyStateTextView.setVisibility(View.GONE);
