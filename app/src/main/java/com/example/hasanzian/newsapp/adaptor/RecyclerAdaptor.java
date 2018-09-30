@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hasanzian.newsapp.R;
+import com.example.hasanzian.newsapp.notification.AppNotificationChannel;
 import com.example.hasanzian.newsapp.utils.Model;
 import com.example.hasanzian.newsapp.utils.QueryUtils;
 
@@ -41,9 +42,18 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        mContext = parent.getContext();
-        return new myViewHolder(view);
+        // night mode
+        if (AppNotificationChannel.nightModeSettings(parent.getContext())) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_dark, parent, false);
+            mContext = parent.getContext();
+            return new myViewHolder(view);
+
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+            mContext = parent.getContext();
+            return new myViewHolder(view);
+
+        }
     }
 
 

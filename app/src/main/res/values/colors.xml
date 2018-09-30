@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Light Mode Theme-->
     <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#01579b</color>
     <color name="colorAccent">#03a9f4</color>
+    <!--Dark mode theme-->
+    <color name="colorPrimaryTheme">#0f2e46</color>
+    <color name="colorPrimaryDarkTheme">#114269</color>
+    <color name="colorAccentTheme">#03f453</color>
+    <!--item list colors-->
     <color name="TimeColor">#A2A2A3</color>
     <color name="SectionColor">#cfd8dc</color>
     <color name="HeadingColor">#443F45</color>
     <color name="AuthorNameColor">#a2a8b1</color>
     <color name="BackgroundColor">#F7F7F7</color>
+    <color name="BackgroundColorDark">#292828</color>
     <color name="FooterColor">#fffa64</color>
+    <color name="TextPrimary">#ffffff</color>
 </resources>

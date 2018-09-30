@@ -29,6 +29,7 @@ import com.example.hasanzian.newsapp.BuildConfig;
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.adaptor.RecyclerAdaptor;
 import com.example.hasanzian.newsapp.loaderUtils.NewsLoader;
+import com.example.hasanzian.newsapp.notification.AppNotificationChannel;
 import com.example.hasanzian.newsapp.notification.NotificationJobScheduler;
 import com.example.hasanzian.newsapp.utils.Model;
 import com.example.hasanzian.newsapp.utils.PaginationScrollListener;
@@ -85,6 +86,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (AppNotificationChannel.nightModeSettings(getApplicationContext())) {
+            setTheme(R.style.AppThemeDark);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);

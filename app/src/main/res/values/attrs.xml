@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="CTAppTheme">
+        <attr name="BackgroundColor" format="color" />
+
+
+    </declare-styleable>
+</resources>

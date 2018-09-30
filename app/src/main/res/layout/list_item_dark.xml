@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/BackgroundColorDark">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        style="@style/CardViewCustomDark"
+        app:cardBackgroundColor="@color/BackgroundColorDark"
+        app:cardCornerRadius="@dimen/dimens_16dp"
+        app:cardElevation="@dimen/dimen_1dp">
+
+        <RelativeLayout style="@style/MatchWrap">
+
+            <LinearLayout
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_image"
+                    style="@style/StoryImageCard"
+                    app:cardCornerRadius="@dimen/dimen_8dp"
+                    app:cardElevation="@dimen/dimen_4dp">
+
+                    <ImageView
+                        android:id="@+id/image"
+                        style="@style/StoryImage"
+                        android:contentDescription="@string/thumnail"
+                        tools:src="@drawable/ic_launcher_foreground" />
+
+
+                </android.support.v7.widget.CardView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/heading"
+                        style="@style/StoryHeadingDark"
+                        tools:text="@string/big_string_for_demo" />
+
+
+                    <TextView
+                        android:id="@+id/section"
+                        style="@style/SectionText"
+                        tools:text="Section" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        style="@style/DateText"
+                        tools:text="21 Augest 2017" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sub_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/authorImage"
+                    style="@style/AuthorImage"
+                    android:elevation="1dp"
+                    tools:src="@drawable/gurdian" />
+
+                <TextView
+                    android:id="@+id/author"
+                    style="@style/AuthorText"
+                    tools:text="By Author Name" />
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

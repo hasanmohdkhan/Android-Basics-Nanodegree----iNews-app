@@ -2,6 +2,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/settings_title">
 
+
+    <PreferenceCategory android:title="Reading Mode">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/settings_night_mode_key"
+            android:summary="@string/settings_night_mode_summary"
+            android:summaryOff="@string/settings_night_mode_summary_off"
+            android:summaryOn="@string/settings_night_mode_summary_on"
+            android:title="@string/settings_night_mode_label" />
+        />
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:summary="@string/settings_min_page_summary"
         android:title="@string/settings_min_page_summary">

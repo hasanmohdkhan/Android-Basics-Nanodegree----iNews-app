@@ -57,5 +57,10 @@
     <string name="settings_notifications_interval_1hrs_value">36</string>
     <string name="settings_notification_category_label">Notification Settings</string>
     <string name="settings_sort_story_label">Sort News Stories</string>
+    <string name="settings_night_mode_key">night_mode</string>
+    <string name="settings_night_mode_summary">Easy reading in night</string>
+    <string name="settings_night_mode_label">Night Mode</string>
+    <string name="settings_night_mode_summary_on">On</string>
+    <string name="settings_night_mode_summary_off">Off</string>
 
 </resources>
