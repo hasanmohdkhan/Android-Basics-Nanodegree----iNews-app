@@ -1,5 +1,6 @@
 package com.example.hasanzian.newsapp.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.job.JobInfo;
@@ -203,6 +204,7 @@ public final class QueryUtils {
      *
      * @return RequestOptions
      */
+    @SuppressLint("CheckResult")
     public static RequestOptions requestOptions() {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.ic_launcher_foreground);

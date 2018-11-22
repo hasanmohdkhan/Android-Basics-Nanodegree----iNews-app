@@ -5,8 +5,10 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.Loader;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 import com.example.hasanzian.newsapp.BuildConfig;
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.adaptor.RecyclerAdaptor;
+import com.example.hasanzian.newsapp.broadcast.ConnectivityBroadcast;
 import com.example.hasanzian.newsapp.loaderUtils.NewsLoader;
 import com.example.hasanzian.newsapp.notification.AppNotificationChannel;
 import com.example.hasanzian.newsapp.notification.NotificationJobScheduler;
@@ -50,7 +53,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int NEWS_LOADER_ID = 1;
     int pageNumber = 1;
     RecyclerAdaptor mAdaptor;
-
+    ConnectivityBroadcast connectivityBroadcast = new ConnectivityBroadcast();
     public JobScheduler mJobScheduler;
     LinearLayoutManager mLinearLayoutManager;
     private static final String LOG_TAG = NewsActivity.class.getName();
@@ -297,5 +300,19 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(connectivityBroadcast, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(connectivityBroadcast);
     }
 }
