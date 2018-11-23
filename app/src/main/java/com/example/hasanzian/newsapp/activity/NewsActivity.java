@@ -76,6 +76,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     @BindView(R.id.footer)
     public ProgressBar footer; // when scrolling is done
     private List<Model> mList = new ArrayList<>();
+    boolean deletedNormalList = false;
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 50;
@@ -88,6 +89,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     public static NotificationManagerCompat notificationManager;
     @BindView(R.id.main_screen)
     View mainScreen;
+    private List<Model> searchResult = new ArrayList<>();
+    private boolean isItSearch = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,6 +238,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Model>> loader, List<Model> list) {
+
         if (list == null && mList.size() > 0) {
             Log.d("List return", "" + list.size() + " mlist" + mList.size());
             showNotConnected("Unable to connect !!!");
@@ -246,7 +250,17 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             mRecyclerView.setVisibility(View.GONE);
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
-            mList.addAll(list);  // list
+
+            if (isItSearch) {
+                if (deletedNormalList) { //true
+                    mList.clear();
+                    deletedNormalList = false;
+                }
+                mList.addAll(list);
+            } else {
+                mList.addAll(list);  // list
+            }
+
             // Hide loading indicator because the data has been loaded
             indicator.setVisibility(View.GONE);
             footer.setVisibility(View.GONE);
@@ -270,13 +284,13 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // Associate searchable configuration with the SearchView
 
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                isItSearch = true;
+                deletedNormalList = true;
                 query = query + s;
                 loaderManager.restartLoader(1, null, NewsActivity.this);
-                mAdaptor.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(), "" + s, Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -286,8 +300,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                 return false;
             }
         });
-
-
         return true;
     }
 

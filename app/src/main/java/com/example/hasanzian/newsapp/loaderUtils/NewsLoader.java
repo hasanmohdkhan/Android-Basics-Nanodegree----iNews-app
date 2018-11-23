@@ -51,6 +51,7 @@ public class NewsLoader extends AsyncTaskLoader<List<Model>> {
             //getting Json String
             jsonString = httpHandler.makeHttpRequest(QueryUtils.createUrl(mUrl));
             list = QueryUtils.extractNews(jsonString);
+            Log.d("List", "" + list.size());
 
         } catch (IOException e) {
             e.printStackTrace();
