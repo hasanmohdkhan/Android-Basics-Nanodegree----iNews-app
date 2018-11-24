@@ -292,6 +292,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                 query = query + s;
                 loaderManager.restartLoader(1, null, NewsActivity.this);
                 Toast.makeText(getApplicationContext(), "" + s, Toast.LENGTH_SHORT).show();
+                query = "";
                 return true;
             }
 
