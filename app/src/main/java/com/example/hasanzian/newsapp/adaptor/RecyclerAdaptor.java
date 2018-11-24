@@ -122,8 +122,4 @@ public class RecyclerAdaptor extends RecyclerView.Adapter<RecyclerAdaptor.myView
         }
     }
 
-    public void remove() {
-
-    }
-
 }

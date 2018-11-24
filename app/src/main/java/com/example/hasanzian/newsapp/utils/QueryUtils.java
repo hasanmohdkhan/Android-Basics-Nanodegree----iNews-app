@@ -3,9 +3,6 @@ package com.example.hasanzian.newsapp.utils;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -22,7 +19,6 @@ import android.util.Log;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.notification.AppNotificationChannel;
-import com.example.hasanzian.newsapp.notification.NotificationJobScheduler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +33,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
-import static android.content.Context.JOB_SCHEDULER_SERVICE;
 
 /**
  * Helper methods related to requesting and receiving News data from Guardian
@@ -254,32 +249,6 @@ public final class QueryUtils {
             Log.e("CreateUrl", "Problem building the URL ", e);
         }
         return url;
-    }
-
-
-    public static void notificationTrigger(Context applicationContext) {
-
-        if (QueryUtils.showNotification(applicationContext)) {
-
-            ComponentName componentName = new ComponentName(applicationContext, NotificationJobScheduler.class);
-            JobInfo info = new JobInfo.
-                    Builder(QueryUtils.JOB_ID, componentName).setPersisted(true).setPeriodic(15 * 60 * 1000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY).build();
-
-            JobScheduler jobScheduler = (JobScheduler) applicationContext.getSystemService(JOB_SCHEDULER_SERVICE);
-            int resultCode = jobScheduler.schedule(info);
-            if (resultCode == JobScheduler.RESULT_SUCCESS) {
-                Log.d("Utils", "Job scheduled");
-            } else {
-                Log.d("Utils", "Job scheduling failed");
-            }
-
-        } else {
-            JobScheduler jobScheduler = (JobScheduler) applicationContext.getSystemService(JOB_SCHEDULER_SERVICE);
-            jobScheduler.cancel(QueryUtils.JOB_ID);
-            Log.d("Utils", "Job cancelled");
-        }
-
-
     }
 
     public static int notificationDelay(Context context) {
