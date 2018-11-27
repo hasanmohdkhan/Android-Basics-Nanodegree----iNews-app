@@ -1,4 +1,5 @@
-# iNews App : ![image](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/icon.png)
+# iNews App : ![image](https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app/blob/master/icon.png)  [![HitCount](http://hits.dwyl.io/hasanmohdkhan/https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app.svg)](http://hits.dwyl.io/hasanmohdkhan/https://github.com/hasanmohdkhan/Android-Basics-Nanodegree----iNews-app)
+
 
 News App is developed as part of Udacity Android Basics Nanodegree under Google India Challenge Scholarship program.
 this project required SDK 21 or above to work.
