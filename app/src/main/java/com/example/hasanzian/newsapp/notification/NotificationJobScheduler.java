@@ -3,7 +3,7 @@ package com.example.hasanzian.newsapp.notification;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.os.AsyncTask;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.example.hasanzian.newsapp.activity.NewsActivity;
