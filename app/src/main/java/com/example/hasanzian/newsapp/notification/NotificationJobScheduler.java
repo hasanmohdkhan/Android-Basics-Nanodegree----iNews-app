@@ -98,7 +98,7 @@ public class NotificationJobScheduler extends JobService {
             for (int i = 0; i < 10; i++) {
                 Log.d(TAG, "run: " + i);
 
-                String mUrl = "https://content.guardianapis.com/search?q=&format=json&show-tags=contributor&show-fields=thumbnail&order-by=newest&page-size=10&page=1&api-key=441da542-bd64-4060-b81c-eff647cb6f27";
+                String mUrl = "https://content.guardianapis.com/search?q=&format=json&show-tags=contributor&show-fields=thumbnail&order-by=newest&page-size=10&page=1&api-key=f4ebdbc6-3d1f-4350-9b1b-07a48efb4764";
                 HttpHandler handler = new HttpHandler();
                 String jsonString = "";
                 try {

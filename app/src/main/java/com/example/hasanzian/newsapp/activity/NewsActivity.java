@@ -1,5 +1,19 @@
 package com.example.hasanzian.newsapp.activity;
 
+import static com.example.hasanzian.newsapp.constants.NewsConstant.API_KEY_VALUE;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.FORMAT_VALUE;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.NEWS_REQ_URL;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_API_KEY;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_CONTRIBUTOR;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_FORMAT;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_ORDER_BY;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_PAGE;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_PAGE_SIZE;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_SEARCH;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_SHOW_FIELDS;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.QUARRY_SHOW_TAGS;
+import static com.example.hasanzian.newsapp.constants.NewsConstant.THUMBNAIL_VALUE;
+
 import android.app.LoaderManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -12,24 +26,23 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.view.MenuItemCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.hasanzian.newsapp.R;
 import com.example.hasanzian.newsapp.adaptor.RecyclerAdaptor;
 import com.example.hasanzian.newsapp.broadcast.ConnectivityBroadcast;
+import com.example.hasanzian.newsapp.databinding.ActivityMainBinding;
 import com.example.hasanzian.newsapp.loaderUtils.NewsLoader;
 import com.example.hasanzian.newsapp.notification.AppNotificationChannel;
 import com.example.hasanzian.newsapp.notification.NotificationJobScheduler;
@@ -37,12 +50,10 @@ import com.example.hasanzian.newsapp.utils.Model;
 import com.example.hasanzian.newsapp.utils.PaginationScrollListener;
 import com.example.hasanzian.newsapp.utils.QueryUtils;
 import com.example.hasanzian.newsapp.utils.RecyclerTouchListener;
+import com.example.hasanzian.newsapp.utils.UriUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Model>> {
     /**
@@ -57,39 +68,21 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     LinearLayoutManager mLinearLayoutManager;
     private static final String LOG_TAG = NewsActivity.class.getName();
     private LoaderManager loaderManager;
-    private static final String NEWS_REQ_URL = "https://content.guardianapis.com/search";
-    private static final String QUARRY_FORMAT = "format";
-    private static final String FORMAT_VALUE = "json";
-    private static final String QUARRY_SEARCH = "q";
-    private static final String QUARRY_PAGE_SIZE = "page-size";
-    private static final String QUARRY_API_KEY = "api-key";
-    private static final String API_KEY_VALUE = "f4ebdbc6-3d1f-4350-9b1b-07a48efb4764";//BuildConfig.ApiKey;
-    private static final String QUARRY_PAGE = "page";
-    private static final String QUARRY_SHOW_TAGS = "show-tags";
-    private static final String QUARRY_SHOW_FIELDS = "show-fields";
-    private static final String THUMBNAIL_VALUE = "thumbnail";
-    private static final String QUARRY_ORDER_BY = "order-by";
-    private static final String QUARRY_CONTRIBUTOR = "contributor";
-    @BindView(R.id.empty_view)
-    public TextView mEmptyStateTextView;
-    @BindView(R.id.footer)
-    public ProgressBar footer; // when scrolling is done
+
+
     private List<Model> mList = new ArrayList<>();
     boolean deletedNormalList = false;
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 50;
-    @BindView(R.id.loading_indicator)
-    public View indicator; // shown when 1st time load app is loaded
-    @BindView(R.id.recycler_view)
-    public RecyclerView mRecyclerView;
     private String query = "";
     public static final String TAG = "Notification Service";
     public static NotificationManagerCompat notificationManager;
-    @BindView(R.id.main_screen)
-    View mainScreen;
+
     private List<Model> searchResult = new ArrayList<>();
     private boolean isItSearch = false;
+
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,33 +90,35 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             setTheme(R.style.AppThemeDark);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        footer.setVisibility(View.INVISIBLE);
-        mRecyclerView.setHasFixedSize(true);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        binding.footer.setVisibility(View.INVISIBLE);
+        binding.recyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerView.setLayoutManager(mLinearLayoutManager);
         notificationManager = NotificationManagerCompat.from(this);
 
         mAdaptor = new RecyclerAdaptor(mList);
-        mRecyclerView.setAdapter(mAdaptor);
+        binding.recyclerView.setAdapter(mAdaptor);
 
-        mEmptyStateTextView.setTypeface(QueryUtils.headingFont(this));
-        mEmptyStateTextView.setVisibility(View.VISIBLE);
+        binding.emptyView.setTypeface(QueryUtils.headingFont(this));
+        binding.emptyView.setVisibility(View.VISIBLE);
 
-        mainScreen.setBackgroundColor(getResources().getColor(R.color.colorPrimaryTheme));
-        mEmptyStateTextView.setTextColor(getResources().getColor(R.color.TextPrimary));
+        binding.mainScreen.setBackgroundColor(getResources().getColor(R.color.colorPrimaryTheme));
+        binding.emptyView.setTextColor(getResources().getColor(R.color.TextPrimary));
 
         if (QueryUtils.isConnectedToNetwork(this)) {
-            mEmptyStateTextView.setVisibility(View.GONE);
+            binding.emptyView.setVisibility(View.GONE);
             loaderManager = getLoaderManager();
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
         } else {
             showNotConnected(getString(R.string.no_internet));
         }
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplication(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
+        binding.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplication(), binding.recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Model model = mList.get(position);
@@ -136,13 +131,13 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
             }
         }));
-        mRecyclerView.addOnScrollListener(new PaginationScrollListener(mLinearLayoutManager) {
+        binding.recyclerView.addOnScrollListener(new PaginationScrollListener(mLinearLayoutManager) {
             @Override
             protected void loadMoreItems() {
-                footer.setVisibility(View.VISIBLE);
+                binding.footer.setVisibility(View.VISIBLE);
                 boolean isConnected = QueryUtils.isConnectedToNetwork(getApplication());
                 if (isConnected) {
-                    mEmptyStateTextView.setVisibility(View.INVISIBLE);
+                    binding.emptyView.setVisibility(View.INVISIBLE);
                     pageNumber += 1;
                     Log.d("Load More", "Current number: " + pageNumber);
                     Log.d("TAG", "RestartLoader on LoadMore");
@@ -150,7 +145,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                     mAdaptor.notifyDataSetChanged();
                 } else {
                     showNotConnected("No internet");
-                    footer.setVisibility(View.GONE);
+                    binding.footer.setVisibility(View.GONE);
                     mList.clear();
                     mAdaptor.notifyDataSetChanged();
                 }
@@ -199,9 +194,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void showNotConnected(String string) {
-        mEmptyStateTextView.setVisibility(View.VISIBLE);
-        mEmptyStateTextView.setText(string);
-        indicator.setVisibility(View.GONE);
+        binding.emptyView.setVisibility(View.VISIBLE);
+        binding.emptyView.setText(string);
+        binding.loadingIndicator.setVisibility(View.GONE);
     }
 
     @Override
@@ -229,10 +224,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         uriBuilder.appendQueryParameter(QUARRY_PAGE, String.valueOf(pageNumber));
         uriBuilder.appendQueryParameter(QUARRY_API_KEY, API_KEY_VALUE);
 
-        Log.d("URL", uriBuilder.toString());
+        String newsUri = UriUtils.getNewsUri(query, orderBy, minPageSize, pageNumber);
+
+        Log.d("URL", newsUri);
 
         // Create a new loader for the given URL
-        return new NewsLoader(this, uriBuilder.toString());
+        return new NewsLoader(this, newsUri);
     }
 
     @Override
@@ -241,14 +238,14 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         if (list == null && mList.size() > 0) {
             Log.d("List return", "" + list.size() + " mlist" + mList.size());
             showNotConnected("Unable to connect !!!");
-            mRecyclerView.setVisibility(View.GONE);
+            binding.recyclerView.setVisibility(View.GONE);
             return;
         } else if (list.isEmpty()) {
             Log.d("No data", "" + list);
             showNotConnected(getString(R.string.no_data_available));
-            mRecyclerView.setVisibility(View.GONE);
+            binding.recyclerView.setVisibility(View.GONE);
         } else {
-            mRecyclerView.setVisibility(View.VISIBLE);
+            binding.recyclerView.setVisibility(View.VISIBLE);
 
             if (isItSearch) {
                 if (deletedNormalList) { //true
@@ -261,9 +258,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             }
 
             // Hide loading indicator because the data has been loaded
-            indicator.setVisibility(View.GONE);
-            footer.setVisibility(View.GONE);
-            mEmptyStateTextView.setVisibility(View.GONE);
+            binding.loadingIndicator.setVisibility(View.GONE);
+            binding.footer.setVisibility(View.GONE);
+            binding.emptyView.setVisibility(View.GONE);
             mAdaptor.notifyDataSetChanged();
 
         }
